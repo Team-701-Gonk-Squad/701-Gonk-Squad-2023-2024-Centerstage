@@ -34,18 +34,20 @@ public class TeleOp701 extends LinearOpMode{
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
-        fl = hardwareMap.get(DcMotor.class, "front_left");
-        fr = hardwareMap.get(DcMotor.class, "front_right");
-        bl = hardwareMap.get(DcMotor.class, "back_left");
-        br = hardwareMap.get(DcMotor.class, "back_right");
-        action1 = hardwareMap.get(DcMotor.class, "action1");
-        action2 = hardwareMap.get(DcMotor.class, "action2");
-        action3 = hardwareMap.get(CRServo.class, "action3");
-        action4 = hardwareMap.get(CRServo.class, "action4");
-        colorBlind = hardwareMap.get(ColorRangeSensor.class, "bruh");
-        red = colorBlind.red();
-        green = colorBlind.green();
-        blue = colorBlind.blue();
+        fl = hardwareMap.get(DcMotor.class, "2");
+        fr = hardwareMap.get(DcMotor.class, "3");
+        bl = hardwareMap.get(DcMotor.class, "0");
+        br = hardwareMap.get(DcMotor.class, "1");
+
+
+//        action1 = hardwareMap.get(DcMotor.class, "action1");
+//        action2 = hardwareMap.get(DcMotor.class, "action2");
+//        action3 = hardwareMap.get(CRServo.class, "action3");
+//        action4 = hardwareMap.get(CRServo.class, "action4");
+//        colorBlind = hardwareMap.get(ColorRangeSensor.class, "bruh");
+//        red = colorBlind.red();
+//        green = colorBlind.green();
+//        blue = colorBlind.blue();
 
 
         double speed = 1;
@@ -63,35 +65,35 @@ public class TeleOp701 extends LinearOpMode{
         }
         waitForStart();
         while (opModeIsActive()) {
-            fl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-            fr.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-            bl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-            br.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
+            fl.setPower(((gamepad1.left_stick_y) - (gamepad1.left_stick_x)) + (gamepad1.right_stick_x) * speed);
+            fr.setPower(((gamepad1.left_stick_y) - (gamepad1.left_stick_x)) + (gamepad1.right_stick_x) * speed * -1);
+            bl.setPower(((gamepad1.left_stick_y) - (gamepad1.left_stick_x)) + (gamepad1.right_stick_x) * speed);
+            br.setPower(((gamepad1.left_stick_y) - (gamepad1.left_stick_x)) + (gamepad1.right_stick_x) * speed * -1);
 
             //action1.setPower(gamepad1.left_trigger);
             //action2.setPower(gamepad1.right_trigger);
-            if (gamepad1.left_bumper) {
-                action3.setPower(1);
-            } else {
-                action3.setPower(0);
-            }
-            if (gamepad1.right_bumper) {
-                action4.setPower(1);
-            } else {
-                action4.setPower(0);
-            }
-            if (colorBlind.blue() <= 250) { //red > 50 && red < 70 && green > 50 && green < 70 && blue > 5 && blue < 23
-                telemetry.addData("object detected : ", "Block");
-            }
-            else if (colorBlind.blue() >= 330) { //red > 49 && red < 60 && green > 65 && green < 85 && blue > 34 && blue < 54
-                telemetry.addData("object detected : ", "Weefle");
-            }
-            else {
-                telemetry.addData("object detected : ", "null");
-            }
-            telemetry.addData("red", colorBlind.red());
-            telemetry.addData("green", colorBlind.green());
-            telemetry.addData("blue", colorBlind.blue());
+//            if (gamepad1.left_bumper) {
+//                action3.setPower(1);
+//            } else {
+//                action3.setPower(0);
+//            }
+//            if (gamepad1.right_bumper) {
+//                action4.setPower(1);
+//            } else {
+//                action4.setPower(0);
+//            }
+//            if (colorBlind.blue() <= 250) { //red > 50 && red < 70 && green > 50 && green < 70 && blue > 5 && blue < 23
+//                telemetry.addData("object detected : ", "Block");
+//            }
+//            else if (colorBlind.blue() >= 330) { //red > 49 && red < 60 && green > 65 && green < 85 && blue > 34 && blue < 54
+//                telemetry.addData("object detected : ", "Weefle");
+//            }
+//            else {
+//                telemetry.addData("object detected : ", "null");
+//            }
+//            telemetry.addData("red", colorBlind.red());
+//            telemetry.addData("green", colorBlind.green());
+//            telemetry.addData("blue", colorBlind.blue());
             telemetry.update();
         }
     }
