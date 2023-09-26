@@ -34,14 +34,20 @@ public class TeleOp701 extends LinearOpMode{
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
+
         fl = hardwareMap.get(DcMotor.class, "front_left");
         fr = hardwareMap.get(DcMotor.class, "front_right");
         bl = hardwareMap.get(DcMotor.class, "back_left");
         br = hardwareMap.get(DcMotor.class, "back_right");
+
+        fl.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotorSimple.Direction.REVERSE);
+
         action1 = hardwareMap.get(DcMotor.class, "action1");
         action2 = hardwareMap.get(DcMotor.class, "action2");
         action3 = hardwareMap.get(CRServo.class, "action3");
         action4 = hardwareMap.get(CRServo.class, "action4");
+
         colorBlind = hardwareMap.get(ColorRangeSensor.class, "bruh");
         red = colorBlind.red();
         green = colorBlind.green();
@@ -63,13 +69,33 @@ public class TeleOp701 extends LinearOpMode{
         }
         waitForStart();
         while (opModeIsActive()) {
-            fl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-            fr.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-            bl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-            br.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
+//            fl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
+//            fr.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
+//            bl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
+//            br.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
 
             //action1.setPower(gamepad1.left_trigger);
             //action2.setPower(gamepad1.right_trigger);
+
+            double x = gamepad1.left_stick_x;
+            double y = gamepad1.left_stick_y*-1;
+            double turn = gamepad1.right_stick_x;
+            double theta = Math.atan2(y, x);
+            double power = Math.hypot(x, y);
+            double sin = Math.sin(theta - Math.PI/4);
+            double cos = Math.cos(theta - Math.PI/4);
+            double max = Math.max(Math.abs(sin), Math.abs(cos));
+            fl.setPower(power * cos/max + turn);
+            fr.setPower(power * sin/max - turn);
+            bl.setPower(power * sin/max + turn);
+            br.setPower(power * cos/max - turn);
+            if ((power + Math.abs(turn)) > 1) {
+                fl.setPower((fl.getPower()) / power + turn);
+                fr.setPower((fr.getPower()) / power + turn);
+                bl.setPower((bl.getPower()) / power + turn);
+                br.setPower((br.getPower()) / power + turn);
+            }
+
             if (gamepad1.left_bumper) {
                 action3.setPower(1);
             } else {
