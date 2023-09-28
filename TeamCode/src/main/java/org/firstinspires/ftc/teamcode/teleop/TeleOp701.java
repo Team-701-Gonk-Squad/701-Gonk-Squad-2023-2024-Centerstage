@@ -77,15 +77,10 @@ public class TeleOp701 extends LinearOpMode{
             //action1.setPower(gamepad1.left_trigger);
             //action2.setPower(gamepad1.right_trigger);
 
-<<<<<<< Updated upstream
             double x = gamepad1.left_stick_x*speed;
             double y = gamepad1.left_stick_y*-speed;
             double turn = gamepad1.right_stick_x*speed;
-=======
-            double x = gamepad1.left_stick_x*0.4;
-            double y = gamepad1.left_stick_y*-0.4;
-            double turn = gamepad1.right_stick_x*0.4;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ;
->>>>>>> Stashed changes
+
             double theta = Math.atan2(y, x);
             double power = Math.hypot(x, y);
             double sin = Math.sin(theta - Math.PI/4);
@@ -102,7 +97,6 @@ public class TeleOp701 extends LinearOpMode{
                 br.setPower((br.getPower()) / (power + turn));
             }
 
-<<<<<<< Updated upstream
             if ((gamepad1.a) || (Math.abs(gamepad1.left_stick_x)+Math.abs(gamepad1.left_stick_y)+Math.abs(gamepad1.right_stick_x) <= 0.1)) {
                 fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 fl.setPower(0);
@@ -119,8 +113,6 @@ public class TeleOp701 extends LinearOpMode{
                 br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             }
 
-=======
->>>>>>> Stashed changes
 //            if (gamepad1.left_bumper) {
 //                action3.setPower(1);
 //            } else {
