@@ -30,6 +30,8 @@ public class TeleOp701 extends LinearOpMode{
     private float green;
     private float blue;
     public float[] hsvValues = {1};
+    double speed = 1;
+
 
     @Override
     public void runOpMode() {
@@ -54,19 +56,7 @@ public class TeleOp701 extends LinearOpMode{
 //        blue = colorBlind.blue();
 
 
-        double speed = 1;
-        if (gamepad1.dpad_down) {
-            speed = 0.35;
-        }
-        if (gamepad1.dpad_left) {
-            speed = 0.5;
-        }
-        if (gamepad1.dpad_up) {
-            speed = 0.8;
-        }
-        if (gamepad1.dpad_right) {
-            speed = 1;
-        }
+
         waitForStart();
         while (opModeIsActive()) {
 //            fl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
@@ -112,6 +102,18 @@ public class TeleOp701 extends LinearOpMode{
                 fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             }
+            if (gamepad1.dpad_down) {
+                speed = 0.35;
+            }
+            if (gamepad1.dpad_left) {
+                speed = 0.5;
+            }
+            if (gamepad1.dpad_up) {
+                speed = 0.8;
+            }
+            if (gamepad1.dpad_right) {
+                speed = 1;
+            }
 
 //            if (gamepad1.left_bumper) {
 //                action3.setPower(1);
@@ -135,6 +137,7 @@ public class TeleOp701 extends LinearOpMode{
 //            telemetry.addData("red", colorBlind.red());
 //            telemetry.addData("green", colorBlind.green());
 //            telemetry.addData("blue", colorBlind.blue());
+            telemetry.addData("speed", speed);
             telemetry.update();
         }
     }
