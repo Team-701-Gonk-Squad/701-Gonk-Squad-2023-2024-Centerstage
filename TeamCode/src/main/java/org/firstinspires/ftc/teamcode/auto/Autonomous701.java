@@ -63,7 +63,7 @@ public class Autonomous701 extends LinearOpMode{
             drive.followTrajectory(trajectoryBackward);
             drive.followTrajectory(trajectoryLeft);
             drive.followTrajectory(trajectoryRight);
-            RRTrajectories.leftSpike();
+//            RRTrajectories.leftSpike();
         }
 
 
