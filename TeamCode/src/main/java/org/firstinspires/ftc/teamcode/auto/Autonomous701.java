@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.RoadRunner.RRTrajectories;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 
@@ -62,6 +63,7 @@ public class Autonomous701 extends LinearOpMode{
             drive.followTrajectory(trajectoryBackward);
             drive.followTrajectory(trajectoryLeft);
             drive.followTrajectory(trajectoryRight);
+            RRTrajectories.leftSpike();
         }
 
 

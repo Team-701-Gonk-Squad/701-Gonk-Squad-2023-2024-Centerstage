@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp
 
-public class TeleOp701 extends LinearOpMode{
+public class TeleOp701 extends LinearOpMode {
 
     private DcMotor fl;
     private DcMotor fr;
@@ -56,7 +56,6 @@ public class TeleOp701 extends LinearOpMode{
 //        blue = colorBlind.blue();
 
 
-
         waitForStart();
         while (opModeIsActive()) {
 //            fl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
@@ -67,19 +66,19 @@ public class TeleOp701 extends LinearOpMode{
             //action1.setPower(gamepad1.left_trigger);
             //action2.setPower(gamepad1.right_trigger);
 
-            double x = gamepad1.left_stick_x*speed;
-            double y = gamepad1.left_stick_y*-speed;
-            double turn = gamepad1.right_stick_x*speed;
+            double x = gamepad1.left_stick_x * speed;
+            double y = gamepad1.left_stick_y * -speed;
+            double turn = gamepad1.right_stick_x * speed;
 
             double theta = Math.atan2(y, x);
             double power = Math.hypot(x, y);
-            double sin = Math.sin(theta - Math.PI/4);
-            double cos = Math.cos(theta - Math.PI/4);
+            double sin = Math.sin(theta - Math.PI / 4);
+            double cos = Math.cos(theta - Math.PI / 4);
             double max = Math.max(Math.abs(sin), Math.abs(cos));
-            fl.setPower(power * cos/max + turn);
-            fr.setPower(power * sin/max - turn);
-            bl.setPower(power * sin/max + turn);
-            br.setPower(power * cos/max - turn);
+            fl.setPower(power * cos / max + turn);
+            fr.setPower(power * sin / max - turn);
+            bl.setPower(power * sin / max + turn);
+            br.setPower(power * cos / max - turn);
             if ((power + Math.abs(turn)) > 1) {
                 fl.setPower((fl.getPower()) / (power + turn));
                 fr.setPower((fr.getPower()) / (power + turn));
@@ -87,7 +86,7 @@ public class TeleOp701 extends LinearOpMode{
                 br.setPower((br.getPower()) / (power + turn));
             }
 
-            if ((gamepad1.a) || (Math.abs(gamepad1.left_stick_x)+Math.abs(gamepad1.left_stick_y)+Math.abs(gamepad1.right_stick_x) <= 0.1)) {
+            if ((gamepad1.a) || (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) + Math.abs(gamepad1.right_stick_x) <= 0.1)) {
                 fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 fl.setPower(0);
                 bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -115,9 +114,9 @@ public class TeleOp701 extends LinearOpMode{
                 speed = 1;
             }
 
-//            if (gamepad1.left_bumper) {
-//                action3.setPower(1);
-//            } else {
+            if (gamepad1.left_bumper) {
+                action3.setPower(1);
+            } else {
 //                action3.setPower(0);
 //            }
 //            if (gamepad1.right_bumper) {
@@ -137,8 +136,9 @@ public class TeleOp701 extends LinearOpMode{
 //            telemetry.addData("red", colorBlind.red());
 //            telemetry.addData("green", colorBlind.green());
 //            telemetry.addData("blue", colorBlind.blue());
-            telemetry.addData("speed", speed);
-            telemetry.update();
+                telemetry.addData("speed", speed);
+                telemetry.update();
+            }
         }
     }
 }
