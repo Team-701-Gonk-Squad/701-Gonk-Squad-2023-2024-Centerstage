@@ -43,8 +43,10 @@ public class AutonomousOpenCV extends OpMode {
     class examplePipeline extends OpenCvPipeline {
         Mat YCbCr = new Mat();
         Mat leftCrop;
+        Mat centerCrop;
         Mat rightCrop;
         double leftavgfin;
+        double centeravgfin;
         double rightavgfin;
         Mat outPut = new Mat();
         Scalar rectColor = new Scalar(255.0, 0.0, 0.0);
@@ -52,29 +54,39 @@ public class AutonomousOpenCV extends OpMode {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
             telemetry.addLine("pipeline running :)");
 
-            Rect leftRect = new Rect(1,1,319,359);
-            Rect rightRect = new Rect(320,1,319,359);
+            Rect centerRect = new Rect(240,90,100,90);
+            Rect leftRect = new Rect(1,80,80,100);
+            Rect rightRect = new Rect(540, 90, 99, 100);
 
             input.copyTo(outPut);
             Imgproc.rectangle(outPut, leftRect, rectColor, 2);
+            Imgproc.rectangle(outPut, centerRect, rectColor, 2);
             Imgproc.rectangle(outPut, rightRect, rectColor, 2);
 
             leftCrop = YCbCr.submat(leftRect);
+            centerCrop = YCbCr.submat(centerRect);
             rightCrop = YCbCr.submat(rightRect);
 
             Core.extractChannel(leftCrop, leftCrop, 2);
+            Core.extractChannel(centerCrop, centerCrop, 2);
             Core.extractChannel(rightCrop, rightCrop, 2);
 
             Scalar leftavg = Core.mean(leftCrop);
+            Scalar centeravg = Core.mean(centerCrop);
             Scalar rightavg = Core.mean(rightCrop);
 
             leftavgfin = leftavg.val[0];
+            centeravgfin = centeravg.val[0];
             rightavgfin = rightavg.val[0];
 
-            if (leftavgfin > rightavgfin) {
+            if (leftavgfin > rightavgfin && leftavgfin > centeravgfin) {
                 telemetry.addLine("Left");
-            } else {
+            }
+            if (rightavgfin > centeravgfin && rightavgfin > leftavgfin) {
                 telemetry.addLine("Right");
+            }
+            if (centeravgfin > rightavgfin && centeravgfin > leftavgfin){
+                telemetry.addLine("Center :)");
             }
 
             return(outPut);
