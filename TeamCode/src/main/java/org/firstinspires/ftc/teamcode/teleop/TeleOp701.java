@@ -90,7 +90,7 @@ public class TeleOp701 extends LinearOpMode {
 
             double x = gamepad1.left_stick_x * speed;
             double y = gamepad1.left_stick_y * -speed;
-            double turn = gamepad1.right_stick_x * speed;
+            double turn = gamepad1.right_stick_x * -speed;
 
             double theta = Math.atan2(y, x);
             double power = Math.hypot(x, y);
