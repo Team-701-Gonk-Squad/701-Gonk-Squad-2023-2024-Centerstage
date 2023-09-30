@@ -45,9 +45,9 @@ public class TeleOp701 extends LinearOpMode {
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
-//        action1 = hardwareMap.get(DcMotor.class, "action1");
-//        action2 = hardwareMap.get(DcMotor.class, "action2");
-//        action3 = hardwareMap.get(CRServo.class, "action3");
+        action1 = hardwareMap.get(DcMotor.class, "action1");
+        action2 = hardwareMap.get(DcMotor.class, "action2");
+        action3 = hardwareMap.get(CRServo.class, "action3");
 //        action4 = hardwareMap.get(CRServo.class, "action4");
 //
 //        colorBlind = hardwareMap.get(ColorRangeSensor.class, "bruh");
@@ -63,8 +63,30 @@ public class TeleOp701 extends LinearOpMode {
 //            bl.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
 //            br.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
 
-            //action1.setPower(gamepad1.left_trigger);
-            //action2.setPower(gamepad1.right_trigger);
+            if (gamepad2.left_trigger > 0.1 && !gamepad2.left_bumper) {
+                action1.setPower(gamepad2.left_trigger*-1);
+            } else if (gamepad2.left_bumper){
+                action1.setPower(1);
+            }else{
+                action1.setPower(0);
+            }
+
+            if (gamepad2.left_stick_y > 0.1) {
+                action2.setPower(gamepad2.left_stick_y);
+            } else if (gamepad2.left_stick_x < -0.1){
+                action2.setPower(gamepad2.left_stick_y);
+            }else{
+                action2.setPower(0);
+            }
+
+            if (gamepad2.right_stick_y>0.1) {
+                action3.setPower(gamepad2.right_stick_y);
+            } else if (gamepad2.right_stick_y<-0.1) {
+                action3.setPower(gamepad2.right_stick_y);
+            } else{
+                action3.setPower(0);
+            }
+
 
             double x = gamepad1.left_stick_x * speed;
             double y = gamepad1.left_stick_y * -speed;
@@ -114,11 +136,8 @@ public class TeleOp701 extends LinearOpMode {
                 speed = 1;
             }
 
-            if (gamepad1.left_bumper) {
-                action3.setPower(1);
-            } else {
-//                action3.setPower(0);
-//            }
+
+
 //            if (gamepad1.right_bumper) {
 //                action4.setPower(1);
 //            } else {
@@ -141,4 +160,3 @@ public class TeleOp701 extends LinearOpMode {
             }
         }
     }
-}
