@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 package org.firstinspires.ftc.teamcode.RoadRunner;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
@@ -31,7 +30,7 @@ public class RRTrajectories {
     private CRServo action3;
     private CRServo action4;
     private static double DISTANCE;
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
     Trajectory forwardToSpike = drive.trajectoryBuilder(new Pose2d())
             .forward(22)
             .build();
@@ -39,17 +38,20 @@ public class RRTrajectories {
             .strafeRight(DISTANCE)
             .build();
 
-    public void leftSpike(){
+    public void leftSpike() {
         drive.followTrajectory(forwardToSpike);
         drive.turn(180);
     }
-    public void rightSpike(){
+
+    public void rightSpike() {
         drive.followTrajectory(forwardToSpike);
         drive.turn(-180);
     }
-    public void middleSpike(){
+
+    public void middleSpike() {
         drive.followTrajectory(forwardToSpike);
     }
+}
 //    public void runOpMode() {
 //        telemetry.addData("Status", "Initialized");
 //        fl = hardwareMap.get(DcMotor.class, "0");
@@ -85,22 +87,8 @@ public class RRTrajectories {
 //            //drive.followTrajectory(trajectoryRight);
 //        }
 //
-=======
-//package org.firstinspires.ftc.teamcode.RoadRunner;
-//
-//import com.acmerobotics.roadrunner.geometry.Pose2d;
-//import com.acmerobotics.roadrunner.trajectory.Trajectory;
-//import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-//import com.qualcomm.robotcore.hardware.DcMotorEx;
-//import com.qualcomm.robotcore.hardware.DcMotorSimple;
-//import com.qualcomm.robotcore.hardware.CRServo;
-//import com.qualcomm.robotcore.hardware.DcMotor;
-//import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-//
-//import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
->>>>>>> Stashed changes
-//
-//
+//BELOW IS A DIFFERENT VERSION OF ABOVE JUST MADE BY ME IDK
+
 //@Autonomous
 //
 //
