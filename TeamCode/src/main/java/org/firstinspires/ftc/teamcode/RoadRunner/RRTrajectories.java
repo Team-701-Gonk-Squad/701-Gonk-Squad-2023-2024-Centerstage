@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.RoadRunner;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,8 +10,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 
 
 @Autonomous
@@ -26,7 +30,7 @@ public class RRTrajectories {
     private CRServo action3;
     private CRServo action4;
     private static double DISTANCE;
-    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
     Trajectory forwardToSpike = drive.trajectoryBuilder(new Pose2d())
             .forward(22)
             .build();
@@ -47,16 +51,15 @@ public class RRTrajectories {
     }
 //    public void runOpMode() {
 //        telemetry.addData("Status", "Initialized");
-////        fl = hardwareMap.get(DcMotor.class, "0");
-////        fr = hardwareMap.get(DcMotor.class, "1");
-////        bl = hardwareMap.get(DcMotor.class, "2");
-////        br = hardwareMap.get(DcMotor.class, "3");
-////        action1 = hardwareMap.get(DcMotor.class, "action1");
-////        action2 = hardwareMap.get(DcMotor.class, "action2");
-////        action3 = hardwareMap.get(CRServo.class, "action3");
-////        action4 = hardwareMap.get(CRServo.class, "action4");
+//        fl = hardwareMap.get(DcMotor.class, "0");
+//        fr = hardwareMap.get(DcMotor.class, "1");
+//        bl = hardwareMap.get(DcMotor.class, "2");
+//        br = hardwareMap.get(DcMotor.class, "3");
+//        action1 = hardwareMap.get(DcMotor.class, "action1");
+//        action2 = hardwareMap.get(DcMotor.class, "action2");
+//        action3 = hardwareMap.get(CRServo.class, "action3");
+//        action4 = hardwareMap.get(CRServo.class, "action4");
 //        DISTANCE = 20;
-//
 //
 //        Trajectory forwardToSpike = drive.trajectoryBuilder(new Pose2d())
 //                .forward(22)

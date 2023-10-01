@@ -73,7 +73,7 @@ public class TeleOp701 extends LinearOpMode {
 
             if (gamepad2.left_stick_y > 0.1) {
                 action2.setPower(gamepad2.left_stick_y);
-            } else if (gamepad2.left_stick_x < -0.1){
+            } else if (gamepad2.left_stick_y < -0.1){
                 action2.setPower(gamepad2.left_stick_y);
             }else{
                 action2.setPower(0);
