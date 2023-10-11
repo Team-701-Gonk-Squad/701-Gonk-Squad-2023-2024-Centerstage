@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous
 
 
-public class Autonomous701 extends LinearOpMode{
+public class TrajectoryBrokeMaybe extends LinearOpMode {
 
     private DcMotor fl;
     private DcMotor fr;
@@ -43,48 +43,26 @@ public class Autonomous701 extends LinearOpMode{
 //        action4 = hardwareMap.get(CRServo.class, "action4");
 //        DISTANCE = 20;
 
-//        Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
-//                .forward(DISTANCE)
-//                .build();
-//
-//        Trajectory trajectoryBackward = drive.trajectoryBuilder(trajectoryForward.end())
-//                .back(DISTANCE)
-//                .build();
-//        Trajectory trajectoryLeft = drive.trajectoryBuilder(trajectoryBackward.end())
-//                .strafeLeft(DISTANCE)
-//                .build();
-//        Trajectory trajectoryRight = drive.trajectoryBuilder(trajectoryLeft.end())
-//                .strafeRight(DISTANCE)
-//                .build();
-        TrajectorySequence bottomRight = drive.trajectorySequenceBuilder(new Pose2d(-62, -35, Math.toRadians(0)))
-                .forward(27)
+        TrajectorySequence forward = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
+                .forward(20)
                 .turn(Math.toRadians(-90))
-                .forward(27*2.85)
+                .build();
+        TrajectorySequence forward1 = drive.trajectorySequenceBuilder(forward.end())
+                .forward(20)
                 .turn(Math.toRadians(-90))
-                .forward(27)
                 .build();
-        TrajectorySequence TESTYWESTY = drive.trajectorySequenceBuilder(new Pose2d(-62,62, Math.toRadians(0)))
-                .forward(120)
-                .turn(Math.toRadians(180))
-                .strafeLeft(120)
-                .turn(Math.toRadians(180))
-                .back(120)
-                .turn(Math.toRadians(90))
-                .forward(120)
+        TrajectorySequence forward2 = drive.trajectorySequenceBuilder(forward1.end())
+                .forward(20)
+                .turn(Math.toRadians(-90))
                 .build();
-
+        TrajectorySequence forward3 = drive.trajectorySequenceBuilder(forward2.end())
+                .forward(20)
+                .turn(Math.toRadians(-90))
+                .build();
         waitForStart();
-
-        while (opModeIsActive() && !isStopRequested()) {
-            drive.followTrajectorySequence(TESTYWESTY);
-        }
-
-
-
-
-
-
-
-
+        drive.followTrajectorySequence(forward);
+        drive.followTrajectorySequence(forward1);
+        drive.followTrajectorySequence(forward2);
+        drive.followTrajectorySequence(forward3);
     }
 }
