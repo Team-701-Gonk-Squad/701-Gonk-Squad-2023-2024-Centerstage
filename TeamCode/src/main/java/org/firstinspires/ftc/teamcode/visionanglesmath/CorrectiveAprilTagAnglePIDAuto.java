@@ -113,6 +113,7 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
                 // If we don't see any tags
                 if(detections.size() == 0)
                 {
+                    hardware.forward(0,0.001);
                     numFramesWithoutDetection++;
 
                     // If we haven't seen a tag for a few frames, lower the decimation
@@ -142,17 +143,46 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
                         Float pitch = rot.secondAngle; // Degrees
                         Float roll = rot.thirdAngle; // Degrees
 
-                        double x = detection.pose.x; // Meters
-                        double y = detection.pose.y; //Meters
-                        double z = detection.pose.z; // Meters
+                        double x = detection.pose.x*FEET_PER_METER; // Meters
+                        double y = detection.pose.y*FEET_PER_METER; //Meters
+                        double z = detection.pose.z*FEET_PER_METER; // Meters
 
                         // Correct x position and angle based on yaw
-//                        while (yaw > 0.5) {
-//                            hardware.strafeLeft(0.4, 0.01);
-//                        }
-//                        while (yaw < -0.5) {
-//                            hardware.strafeRight(0.4, 0.01);
-//                        }
+
+                        if (yaw < -1) {
+                            hardware.spinRight(-yaw*0.02+0.04, 0.1);
+                            telemetry.addLine("spinright");
+                        }
+                        else if (yaw > 1) {
+                            hardware.spinLeft(yaw*0.02+0.04, 0.1);
+                            telemetry.addLine("spinright");
+                        }
+                        else {
+                            telemetry.addLine("spin complete");
+                            if (z < 2) {
+                                hardware.backward((Math.abs(z-2)), 0.1);
+                                telemetry.addLine("backward");
+                            }
+                            else if (z > 2) {
+                                hardware.forward((Math.abs(z-2)), 0.1);
+                                telemetry.addLine("forward");
+                            }
+                            else {
+                                telemetry.addLine("distanced");
+                                if (x < -0.03) {
+                                    hardware.strafeLeft(-x+0.05, 0.1);
+                                    telemetry.addLine("strafeleft");
+                                }
+                                else if (x > 0.03) {
+                                    hardware.strafeRight(x+0.05, 0.1);
+                                    telemetry.addLine("straferight");
+                                }
+                                else {
+                                    telemetry.addLine("strafe complete");
+                                    telemetry.addLine("stop");
+                                }
+                            }
+                        }
 
 
                         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
