@@ -33,10 +33,10 @@ public class Autonomous701 extends LinearOpMode{
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         telemetry.addData("Status", "Initialized");
-//        fl = hardwareMap.get(DcMotor.class, "0");
-//        fr = hardwareMap.get(DcMotor.class, "1");
-//        bl = hardwareMap.get(DcMotor.class, "2");
-//        br = hardwareMap.get(DcMotor.class, "3");
+        fl = hardwareMap.get(DcMotor.class, "0");
+        fr = hardwareMap.get(DcMotor.class, "1");
+        bl = hardwareMap.get(DcMotor.class, "2");
+        br = hardwareMap.get(DcMotor.class, "3");
 //        action1 = hardwareMap.get(DcMotor.class, "action1");
 //        action2 = hardwareMap.get(DcMotor.class, "action2");
 //        action3 = hardwareMap.get(CRServo.class, "action3");
@@ -76,7 +76,11 @@ public class Autonomous701 extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            drive.followTrajectorySequence(TESTYWESTY);
+            fl.setPower(-1);
+            fr.setPower(1);
+            bl.setPower(-1);
+            br.setPower(1);
+            //drive.followTrajectorySequence(TESTYWESTY);
         }
 
 
