@@ -159,23 +159,23 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
                         }
                         else {
                             telemetry.addLine("spin complete");
-                            if (z < 2) {
-                                hardware.backward((Math.abs(z-2)), 0.1);
-                                telemetry.addLine("backward");
+                            if (x < -0.03) {  //z < 1.9
+                                hardware.strafeLeft(Math.abs(x-0.03), 0.1);//hardware.backward(Math.abs(z-2), 0.1);
+                                telemetry.addLine("strafeleft");//telemetry.addLine("backward");
                             }
-                            else if (z > 2) {
-                                hardware.forward((Math.abs(z-2)), 0.1);
-                                telemetry.addLine("forward");
+                            else if (x > 0.03) {  //z > 2.1
+                                hardware.strafeRight(Math.abs(x-0.03), 0.1);//hardware.forward((Math.abs(z-2)), 0.1);
+                                telemetry.addLine("straferight");//telemetry.addLine("forward");
                             }
                             else {
                                 telemetry.addLine("distanced");
-                                if (x < -0.03) {
-                                    hardware.strafeLeft(-x+0.05, 0.1);
-                                    telemetry.addLine("strafeleft");
+                                if (z < 1.9) { //x < -0.03
+                                    hardware.backward(Math.abs(z-2), 0.1);//hardware.strafeLeft(-x+0.05, 0.1);
+                                    telemetry.addLine("backward");//telemetry.addLine("strafeleft");
                                 }
-                                else if (x > 0.03) {
-                                    hardware.strafeRight(x+0.05, 0.1);
-                                    telemetry.addLine("straferight");
+                                else if (z > 2.1) { //x > 0.03
+                                    hardware.forward((Math.abs(z-2)), 0.1);//hardware.strafeRight(x+0.05, 0.1);
+                                    telemetry.addLine("forward");//telemetry.addLine("straferight");
                                 }
                                 else {
                                     telemetry.addLine("strafe complete");
@@ -213,7 +213,7 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
 
             telemetry.update();
 
-            sleep(20);
+            sleep(20);//20
         }
     }
 }
