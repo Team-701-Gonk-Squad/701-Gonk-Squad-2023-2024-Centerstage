@@ -65,11 +65,13 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
     final int THRESHOLD_NUM_FRAMES_NO_DETECTION_BEFORE_LOW_DECIMATION = 4;
 
     public Hardware hardware;
+    public Ploop ploop;
 
     @Override
     public void runOpMode()
     {
         hardware = new Hardware(hardwareMap);
+        Ploop looper = new Ploop(hardwareMap);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -143,46 +145,48 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
                         Float pitch = rot.secondAngle; // Degrees
                         Float roll = rot.thirdAngle; // Degrees
 
-                        double x = detection.pose.x*FEET_PER_METER; // Meters
-                        double y = detection.pose.y*FEET_PER_METER; //Meters
-                        double z = detection.pose.z*FEET_PER_METER; // Meters
+                        double x = detection.pose.x*FEET_PER_METER; // Ft
+                        double y = detection.pose.y*FEET_PER_METER; //Ft
+                        double z = detection.pose.z*FEET_PER_METER; // Ft
+                        looper.pLoop(yaw, x, z, telemetry);
 
                         // Correct x position and angle based on yaw
 
-                        if (yaw < -1) {
-                            hardware.spinRight(-yaw*0.02+0.04, 0.1);
-                            telemetry.addLine("spinright");
-                        }
-                        else if (yaw > 1) {
-                            hardware.spinLeft(yaw*0.02+0.04, 0.1);
-                            telemetry.addLine("spinright");
-                        }
-                        else {
-                            telemetry.addLine("spin complete");
-                            if (z < 2) {
-                                hardware.backward((Math.abs(z-2)), 0.1);
-                                telemetry.addLine("backward");
-                            }
-                            else if (z > 2) {
-                                hardware.forward((Math.abs(z-2)), 0.1);
-                                telemetry.addLine("forward");
-                            }
-                            else {
-                                telemetry.addLine("distanced");
-                                if (x < -0.03) {
-                                    hardware.strafeLeft(-x+0.05, 0.1);
-                                    telemetry.addLine("strafeleft");
-                                }
-                                else if (x > 0.03) {
-                                    hardware.strafeRight(x+0.05, 0.1);
-                                    telemetry.addLine("straferight");
-                                }
-                                else {
-                                    telemetry.addLine("strafe complete");
-                                    telemetry.addLine("stop");
-                                }
-                            }
-                        }
+//                        if (yaw < -3) {
+//                            hardware.spinRight(-yaw*0.015+0.02, 0.1);
+//                            telemetry.addLine("spinright");
+//                        }
+//                        else if (yaw > 3) {
+//                            hardware.spinLeft(yaw*0.015+0.02, 0.1);
+//                            telemetry.addLine("spinright");
+//                        }
+//                        else {
+//                            telemetry.addLine("spin complete");
+//                        }
+//                            if (x < -0.1) {
+//                                hardware.strafeLeft((-x*0.5)+0.03, 0.1);
+//                                telemetry.addLine("strafeleft");
+//                            }
+//                            else if (x > 0.1) {
+//                                hardware.strafeRight((x*0.5)+0.03, 0.1);
+//                                telemetry.addLine("straferight");
+//                            }
+//                            else {
+//                                telemetry.addLine("strafe complete");
+//                                if (z < 1.75) {
+//                                    hardware.backward(0.5*(Math.abs(z-2)), 0.1);
+//                                    telemetry.addLine("backward");
+//                                }
+//                                else if (z > 2.25) {
+//                                    hardware.forward(0.5*(Math.abs(z-2)), 0.1);
+//                                    telemetry.addLine("forward");
+//                                }
+//                                else {
+//                                    telemetry.addLine("distanced");
+//                                    telemetry.addLine("stop");
+//                                }
+//                            }
+//                        }
 
 
                         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
@@ -213,7 +217,7 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
 
             telemetry.update();
 
-            sleep(20);
+            sleep(30);
         }
     }
 }

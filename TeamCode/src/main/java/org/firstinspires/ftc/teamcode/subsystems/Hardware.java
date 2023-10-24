@@ -46,6 +46,13 @@ public class Hardware {
         distance = hardwareMap.get(DistanceSensor.class, "distance");
     }
 
+    public void setRaw(double Lr, double Lf, double Rr, double Rf) {
+        leftRear.setPower(Lr);
+        leftFront.setPower(Lf);
+        rightFront.setPower(Rf);
+        rightRear.setPower(Rr);
+    }
+
     public double getDistance() {
         return distance.getDistance(DistanceUnit.MM);
     }
