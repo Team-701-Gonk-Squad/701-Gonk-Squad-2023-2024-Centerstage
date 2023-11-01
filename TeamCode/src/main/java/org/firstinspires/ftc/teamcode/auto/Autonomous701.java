@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
+
 @Autonomous
 
 
@@ -76,10 +77,26 @@ public class Autonomous701 extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            fl.setPower(-1);
-            fr.setPower(1);
-            bl.setPower(-1);
-            br.setPower(1);
+            fl.setPower(0.5);
+            fr.setPower(0.5);
+            bl.setPower(0.5);
+            br.setPower(0.5);
+            sleep(1000);
+            fl.setPower(0);
+            fr.setPower(0);
+            bl.setPower(0);
+            br.setPower(0);
+            sleep(500);
+            fl.setPower(-0.5);
+            fr.setPower(-0.5);
+            bl.setPower(-0.5);
+            br.setPower(-0.5);
+            sleep(1000);
+            fl.setPower(0);
+            fr.setPower(0);
+            bl.setPower(0);
+            br.setPower(0);
+            sleep(1000);
             //drive.followTrajectorySequence(TESTYWESTY);
         }
 
