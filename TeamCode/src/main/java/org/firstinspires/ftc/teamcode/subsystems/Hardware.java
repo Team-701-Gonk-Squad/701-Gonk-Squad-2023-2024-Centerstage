@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,6 +17,10 @@ public class Hardware {
     public DcMotor leftRear;
     public DcMotor rightRear;
     public DcMotor rightFront;
+
+    public RevColorSensorV3 upSlot;
+
+    public RevColorSensorV3 downSlot;
 
     public IMU imu;
 
@@ -44,7 +49,19 @@ public class Hardware {
         imu.initialize(parameters);
 
         distance = hardwareMap.get(DistanceSensor.class, "distance");
+
+        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");
+
+        downSlot = hardwareMap.get(RevColorSensorV3.class, "color port 3");
     }
+
+//    public String[] boxContents() {
+//        if (upSlot.getDistance() )
+//
+//
+//        String[] returnArray = {};
+//        return returnArray;
+//    }
 
     public void setRaw(double Lr, double Lf, double Rr, double Rf) {
         leftRear.setPower(Lr);

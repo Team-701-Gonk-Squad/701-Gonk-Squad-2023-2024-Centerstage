@@ -35,7 +35,7 @@ public class Ploop {
             BackLeftPower += strafePower;
             BackRightPower -= strafePower;
             telemetry.addData("Strafe power: ", strafePower);
-        } if (z > 2.25 || z < 1.75) {
+        } if (z > 4 || z < 3.8) {
             FrontLeftPower += straightPower;
             FrontRightPower += straightPower;
             BackLeftPower += straightPower;
