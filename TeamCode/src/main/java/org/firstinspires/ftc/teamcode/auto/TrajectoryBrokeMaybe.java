@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -44,7 +45,7 @@ public class TrajectoryBrokeMaybe extends LinearOpMode {
 //        DISTANCE = 20;
 
         TrajectorySequence forward = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
-                .forward(20)
+                .forward(140)//20
                 .turn(Math.toRadians(-90))
                 .build();
         TrajectorySequence forward1 = drive.trajectorySequenceBuilder(forward.end())
@@ -59,10 +60,15 @@ public class TrajectoryBrokeMaybe extends LinearOpMode {
                 .forward(20)
                 .turn(Math.toRadians(-90))
                 .build();
+        TrajectorySequence splineywiney = drive.trajectorySequenceBuilder(new Pose2d(100000, 0, Math.toRadians(0)))
+                .splineTo(new Vector2d(100024,140),0)
+                .splineTo(new Vector2d(100000,0),0)
+                .build();
         waitForStart();
-        drive.followTrajectorySequence(forward);
-        drive.followTrajectorySequence(forward1);
-        drive.followTrajectorySequence(forward2);
-        drive.followTrajectorySequence(forward3);
+        drive.followTrajectorySequence(splineywiney);
+//        drive.followTrajectorySequence(forward);
+//        drive.followTrajectorySequence(forward1);
+//        drive.followTrajectorySequence(forward2);
+//        drive.followTrajectorySequence(forward3);
     }
 }
