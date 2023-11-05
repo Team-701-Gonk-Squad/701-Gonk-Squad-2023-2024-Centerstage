@@ -33,21 +33,21 @@ public class boxDetector extends LinearOpMode {
 //            telemetry.addData("B", (Math.round(hardware.upSlot.blue()/hardware.upSlot.getDistance(DistanceUnit.METER)*100)/1000));
 //
 
-            if ((hardware.upSlot.getDistance(DistanceUnit.METER)*100) < 3) {
-
-                if (((hardware.upSlot.blue()) > (hardware.upSlot.green())) && ((hardware.upSlot.blue()) > (hardware.upSlot.red()))) {
-                    telemetry.addData("Color", "White/Purple");
-                } else if (((hardware.upSlot.red()) < (hardware.upSlot.blue())) && ((hardware.upSlot.red()) < (hardware.upSlot.green()))) {
-                    telemetry.addData("Color", "Green");
-                } else if (((hardware.upSlot.red()) > (hardware.upSlot.blue())) && ((hardware.upSlot.red()) < (hardware.upSlot.green()))) {
-                    telemetry.addData("Color", "Yellow");
-                } else {
-                    telemetry.addData("Color", "Unknown");
-                }
-
-            } else {
-                telemetry.addData("Color", "None");
-            }
+//            if ((hardware.upSlot.getDistance(DistanceUnit.METER)*100) < 3) {
+//
+//                if (((hardware.upSlot.blue()) > (hardware.upSlot.green())) && ((hardware.upSlot.blue()) > (hardware.upSlot.red()))) {
+//                    telemetry.addData("Color", "White/Purple");
+//                } else if (((hardware.upSlot.red()) < (hardware.upSlot.blue())) && ((hardware.upSlot.red()) < (hardware.upSlot.green()))) {
+//                    telemetry.addData("Color", "Green");
+//                } else if (((hardware.upSlot.red()) > (hardware.upSlot.blue())) && ((hardware.upSlot.red()) < (hardware.upSlot.green()))) {
+//                    telemetry.addData("Color", "Yellow");
+//                } else {
+//                    telemetry.addData("Color", "Unknown");
+//                }
+//
+//            } else {
+//                telemetry.addData("Color", "None");
+//            }
 
 
             sleep(100);

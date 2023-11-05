@@ -16,7 +16,7 @@ public class PixelDepth extends OpMode {
 
     @Override
     public void loop() {
-        telemetry.addLine("Distance: " + hardware.getDistance());
+//        telemetry.addLine("Distance: " + hardware.getDistance());
         telemetry.update();
     }
 }

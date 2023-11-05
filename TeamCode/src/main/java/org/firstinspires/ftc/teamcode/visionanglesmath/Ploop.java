@@ -12,7 +12,7 @@ public class Ploop {
         hardware = new Hardware(hardwareMap);
     }
 
-    public void pLoop(Float yaw, double x, double z, Telemetry telemetry) {
+    public boolean pLoop(Float yaw, double x, double z, Telemetry telemetry) {
 
         double FrontLeftPower = 0;
         double FrontRightPower = 0;
@@ -49,5 +49,7 @@ public class Ploop {
         hardware.leftRear.setPower(BackLeftPower);
         hardware.rightRear.setPower(BackRightPower);
         telemetry.update();
+
+        return((yaw > -1 && yaw < 1) && (x < 0.1 && x > -0.1) && (z < 4 && z > 3.8));
     }
 }

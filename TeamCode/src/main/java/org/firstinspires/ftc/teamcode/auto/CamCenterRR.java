@@ -19,8 +19,10 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.visionanglesmath;
+package org.firstinspires.ftc.teamcode.auto;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -29,7 +31,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Hardware;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.visionanglesmath.Ploop;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -38,7 +43,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @TeleOp
-public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
+public class CamCenterRR extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeling aprilTagDetectionPipeline;
@@ -66,10 +71,18 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
 
     public Hardware hardware;
     public Ploop ploop;
+    public Boolean centered;
 
     @Override
     public void runOpMode()
     {
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        TrajectorySequence forward = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
+                .splineTo(new Vector2d(-5, 5), Math.toRadians(180))
+                .splineTo(new Vector2d(-140, 0), Math.toRadians(180))
+                .build();
+
         hardware = new Hardware(hardwareMap);
         Ploop looper = new Ploop(hardwareMap);
 
@@ -149,7 +162,14 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
                         double y = detection.pose.y*FEET_PER_METER; //Ft
                         double z = detection.pose.z*FEET_PER_METER; // Ft
 
-                        looper.pLoop(yaw, x, z, telemetry);
+                        centered = looper.pLoop(yaw, x, z, telemetry);
+
+                        if (centered) {
+                            drive.followTrajectorySequence(forward);
+                            telemetry.addLine("centered");
+                        } else {
+                            telemetry.addLine("not centered");
+                        }
 
                         // Correct x position and angle based on yaw
 

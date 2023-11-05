@@ -20,48 +20,9 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-62, 62, Math.toRadians(0)))
-//                                .strafeRight(50) // Top Right
-
-//                                .strafeLeft(50) // Top Left
-
-//                                .forward(27) // Bottom Right
-//                                .turn(Math.toRadians(-90))
-//                                .forward(27*2.85)
-//                                .turn(Math.toRadians(-90))
-//                                .forward(27)
-
-//                                .forward(27) // Bottom Left
-//                                .turn(Math.toRadians(90))
-//                                .forward(27*2.85)
-//                                .turn(Math.toRadians(90))
-//                                .forward(27)
-
-
-//                                .splineTo((new Vector2d(-45,-35)), 0)
-//                                .splineTo((new Vector2d(-35,0)),(Math.toRadians(90)))
-//                                .splineTo((new Vector2d(-35, 30)), Math.toRadians(90))
-//                                .splineTo((new Vector2d(-56,56)), Math.toRadians(90))
-
-//                                .splineTo((new Vector2d(-35,30)), Math.toRadians(90))
-//                                .splineTo((new Vector2d(-56,56)), Math.toRadians(90))
-
-//                                .forward(120)
-//                                .turn(Math.toRadians(180))
-//                                .strafeLeft(120)
-//                                .turn(Math.toRadians(180))
-//                                .back(120)
-//                                .turn(Math.toRadians(90))
-//                                .forward(120)
-
-                                .forward(120)
-                                .turn(Math.toRadians(-90))
-                                .forward(120)
-                                .turn(Math.toRadians(-90))
-                                .forward(120)
-                                .turn(Math.toRadians(-90))
-                                .forward(120)
-                                .turn(Math.toRadians(-90))
+                        drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
+                                .splineTo(new Vector2d(-5, 5), Math.toRadians(180))
+                                .splineTo(new Vector2d(-140, 0), Math.toRadians(180))
                                 .build()
                 );
 

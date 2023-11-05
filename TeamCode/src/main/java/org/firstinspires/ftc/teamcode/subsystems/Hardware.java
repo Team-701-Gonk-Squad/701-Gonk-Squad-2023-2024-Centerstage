@@ -4,6 +4,7 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -17,14 +18,14 @@ public class Hardware {
     public DcMotor leftRear;
     public DcMotor rightRear;
     public DcMotor rightFront;
-
-    public RevColorSensorV3 upSlot;
-
-    public RevColorSensorV3 downSlot;
+//
+//    public RevColorSensorV3 upSlot;
+//
+//    public RevColorSensorV3 downSlot;
 
     public IMU imu;
-
-    public DistanceSensor distance;
+//
+//    public DistanceSensor distance;
 
     public Hardware(HardwareMap hardwareMap) {
         leftFront = hardwareMap.get(DcMotor.class, "2");
@@ -47,12 +48,12 @@ public class Hardware {
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
         imu.initialize(parameters);
-
-        distance = hardwareMap.get(DistanceSensor.class, "distance");
-
-        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");
-
-        downSlot = hardwareMap.get(RevColorSensorV3.class, "color port 3");
+//
+//        distance = hardwareMap.get(DistanceSensor.class, "distance");
+//
+//        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");
+//
+//        downSlot = hardwareMap.get(RevColorSensorV3.class, "color port 3");
     }
 
 //    public String[] boxContents() {
@@ -70,9 +71,9 @@ public class Hardware {
         rightRear.setPower(Rr);
     }
 
-    public double getDistance() {
-        return distance.getDistance(DistanceUnit.MM);
-    }
+//    public double getDistance() {
+//        return distance.getDistance(DistanceUnit.MM);
+//    }
 
     public final void sleep(long milliseconds) {
         try {
