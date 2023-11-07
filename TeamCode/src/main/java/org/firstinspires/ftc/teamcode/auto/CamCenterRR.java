@@ -72,15 +72,23 @@ public class CamCenterRR extends LinearOpMode
     public Hardware hardware;
     public Ploop ploop;
     public Boolean centered;
-
     @Override
     public void runOpMode()
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        TrajectorySequence forward = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
+//        TrajectorySequence tag = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
+//                .splineTo(new Vector2d(-5, 5), Math.toRadians(180))
+//                .splineTo(new Vector2d(-20, 5), Math.toRadians(180))
+//                .build();
+        TrajectorySequence tag = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
                 .splineTo(new Vector2d(-5, 5), Math.toRadians(180))
-                .splineTo(new Vector2d(-140, 0), Math.toRadians(180))
+                .splineTo(new Vector2d(-45, 5), Math.toRadians(180))
+                .build();
+
+        TrajectorySequence youreit = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
+                .splineTo(new Vector2d(-5, 5), Math.toRadians(0))
+                .splineTo(new Vector2d(-20, 5), Math.toRadians(0))
                 .build();
 
         hardware = new Hardware(hardwareMap);
@@ -165,7 +173,8 @@ public class CamCenterRR extends LinearOpMode
                         centered = looper.pLoop(yaw, x, z, telemetry);
 
                         if (centered) {
-                            drive.followTrajectorySequence(forward);
+                            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                            drive.followTrajectorySequence(tag);
                             telemetry.addLine("centered");
                         } else {
                             telemetry.addLine("not centered");

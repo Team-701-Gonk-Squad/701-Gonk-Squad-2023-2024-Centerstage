@@ -60,9 +60,9 @@ public class TrajectoryBrokeMaybe extends LinearOpMode {
                 .forward(20)
                 .turn(Math.toRadians(-90))
                 .build();
-        TrajectorySequence splineywiney = drive.trajectorySequenceBuilder(new Pose2d(100000, 0, Math.toRadians(0)))
-                .splineTo(new Vector2d(100024,140),0)
-                .splineTo(new Vector2d(100000,0),0)
+        TrajectorySequence splineywiney = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
+                .splineTo(new Vector2d(10,24),90)
+                .splineTo(new Vector2d(0,0),0)
                 .build();
         waitForStart();
         drive.followTrajectorySequence(splineywiney);
