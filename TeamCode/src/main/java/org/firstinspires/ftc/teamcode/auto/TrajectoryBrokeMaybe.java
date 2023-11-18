@@ -29,6 +29,8 @@ public class TrajectoryBrokeMaybe extends LinearOpMode {
     private CRServo action3;
     private CRServo action4;
     private static double DISTANCE;
+    Pose2d startPose = new Pose2d(-35, 60, Math.toRadians(90));
+
 
     @Override
     public void runOpMode() {
@@ -60,12 +62,25 @@ public class TrajectoryBrokeMaybe extends LinearOpMode {
                 .forward(20)
                 .turn(Math.toRadians(-90))
                 .build();
-        TrajectorySequence splineywiney = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
-                .splineTo(new Vector2d(10,24),90)
-                .splineTo(new Vector2d(0,0),0)
+        TrajectorySequence splineywiney = drive.trajectorySequenceBuilder(startPose)
+                .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
+                .splineTo(new Vector2d(0, -35), Math.toRadians(0))
+                .splineTo(new Vector2d(40, -35), Math.toRadians(0))
+                .splineTo(new Vector2d(45, -56), Math.toRadians(270))
+                .splineTo(new Vector2d(60, -60), Math.toRadians(0))
                 .build();
+        TrajectorySequence UnderTruss = drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))
+                .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
+                .splineTo(new Vector2d(0, -35), Math.toRadians(0))
+                .splineTo(new Vector2d(40, -35), Math.toRadians(0))
+                .splineTo(new Vector2d(45, -56), Math.toRadians(270))
+                .splineTo(new Vector2d(60, -60), Math.toRadians(0))
+                .build();
+
+//                .splineTo(new Vector2d(10,24),90)
+//                .splineTo(new Vector2d(0,0),0)
         waitForStart();
-        drive.followTrajectorySequence(splineywiney);
+        drive.followTrajectorySequence(UnderTruss);
 //        drive.followTrajectorySequence(forward);
 //        drive.followTrajectorySequence(forward1);
 //        drive.followTrajectorySequence(forward2);

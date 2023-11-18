@@ -60,7 +60,7 @@ public class TeleOp701 extends LinearOpMode {
 //            }
 
 
-            double x = gamepad1.left_stick_x * speed;
+            double x = gamepad1.left_stick_x * -speed;
             double y = gamepad1.left_stick_y * -speed;
             double turn = gamepad1.right_stick_x * -speed;
 
@@ -69,13 +69,13 @@ public class TeleOp701 extends LinearOpMode {
             double sin = Math.sin(theta - Math.PI / 4);
             double cos = Math.cos(theta - Math.PI / 4);
             double max = Math.max(Math.abs(sin), Math.abs(cos));
-            hardware.leftFront.setPower(power * cos / max + turn);
+            hardware.rightFront.setPower(power * cos / max + turn);
             hardware.leftFront.setPower(power * sin / max - turn);
             hardware.rightRear.setPower(power * sin / max + turn);
             hardware.leftRear.setPower(power * cos / max - turn);
             if ((power + Math.abs(turn)) > 1) {
                 hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
-                hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
+                hardware.rightFront.setPower((hardware.rightFront.getPower()) / (power + turn));
                 hardware.rightRear.setPower((hardware.rightRear.getPower()) / (power + turn));
                 hardware.leftRear.setPower((hardware.leftRear.getPower()) / (power + turn));
             }
@@ -85,14 +85,14 @@ public class TeleOp701 extends LinearOpMode {
                 hardware.leftFront.setPower(0);
                 hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 hardware.rightRear.setPower(0);
-                hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                hardware.leftFront.setPower(0);
+                hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                hardware.rightFront.setPower(0);
                 hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 hardware.leftRear.setPower(0);
             } else {
                 hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             }
             if (gamepad1.dpad_down) {
@@ -127,6 +127,7 @@ public class TeleOp701 extends LinearOpMode {
 //            telemetry.addData("red", colorBlind.red());
 //            telemetry.addData("green", colorBlind.green());
 //            telemetry.addData("blue", colorBlind.blue());
+                telemetry.addData("Power On Front right", hardware.rightFront.getPower());
                 telemetry.addData("speed", speed);
                 telemetry.update();
             }
