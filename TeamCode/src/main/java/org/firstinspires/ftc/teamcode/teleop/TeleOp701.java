@@ -12,57 +12,24 @@ import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.subsystems.Hardware;
+import org.firstinspires.ftc.teamcode.visionanglesmath.Ploop;
 
 @TeleOp
 
 public class TeleOp701 extends LinearOpMode {
-
     Hardware hardware;
-
     double speed = 1;
-
-
+    Ploop looper;
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
-
         hardware = new Hardware(hardwareMap);
 
         waitForStart();
         while (opModeIsActive()) {
-//            hardware.leftFront.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-//            hardware.leftFront.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-//            hardware.rightRear.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-//            hardware.leftRear.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-
-//            if (gamepad2.left_trigger > 0.1 && !gamepad2.left_bumper) {
-//                action1.setPower(gamepad2.left_trigger*-1);
-//            } else if (gamepad2.left_bumper){
-//                action1.setPower(1);
-//            }else{
-//                action1.setPower(0);
-//            }
-//
-//            if (gamepad2.left_stick_y > 0.1) {
-//                action2.setPower(gamepad2.left_stick_y);
-//            } else if (gamepad2.left_stick_y < -0.1){
-//                action2.setPower(gamepad2.left_stick_y);
-//            }else{
-//                action2.setPower(0);
-//            }
-//
-//            if (gamepad2.right_stick_y>0.1) {
-//                action3.setPower(gamepad2.right_stick_y);
-//            } else if (gamepad2.right_stick_y<-0.1) {
-//                action3.setPower(gamepad2.right_stick_y);
-//            } else{
-//                action3.setPower(0);
-//            }
-
-
-            double x = gamepad1.left_stick_x * speed;
+            double turn = gamepad1.left_stick_x * speed;
             double y = gamepad1.left_stick_y * -speed;
-            double turn = gamepad1.right_stick_x * -speed;
+            double x = gamepad1.right_stick_x * -speed;
 
             double theta = Math.atan2(y, x);
             double power = Math.hypot(x, y);
@@ -70,12 +37,12 @@ public class TeleOp701 extends LinearOpMode {
             double cos = Math.cos(theta - Math.PI / 4);
             double max = Math.max(Math.abs(sin), Math.abs(cos));
             hardware.leftFront.setPower(power * cos / max + turn);
-            hardware.leftFront.setPower(power * sin / max - turn);
+            hardware.rightFront.setPower(power * sin / max - turn);
             hardware.rightRear.setPower(power * sin / max + turn);
             hardware.leftRear.setPower(power * cos / max - turn);
             if ((power + Math.abs(turn)) > 1) {
                 hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
-                hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
+                hardware.rightFront.setPower((hardware.leftFront.getPower()) / (power + turn));
                 hardware.rightRear.setPower((hardware.rightRear.getPower()) / (power + turn));
                 hardware.leftRear.setPower((hardware.leftRear.getPower()) / (power + turn));
             }
@@ -85,8 +52,8 @@ public class TeleOp701 extends LinearOpMode {
                 hardware.leftFront.setPower(0);
                 hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 hardware.rightRear.setPower(0);
-                hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                hardware.leftFront.setPower(0);
+                hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                hardware.rightFront.setPower(0);
                 hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 hardware.leftRear.setPower(0);
             } else {
@@ -108,27 +75,19 @@ public class TeleOp701 extends LinearOpMode {
                 speed = 1;
             }
 
+            hardware.leftSlide.setPower(0);
+            hardware.rightSlide.setPower(0);
 
+            hardware.leftSlide.setPower(gamepad1.right_trigger);
+            hardware.rightSlide.setPower(gamepad1.right_trigger);
 
-//            if (gamepad1.right_bumper) {
-//                action4.setPower(1);
-//            } else {
-//                action4.setPower(0);
-//            }
-//            if (colorBlind.blue() <= 250) { //red > 50 && red < 70 && green > 50 && green < 70 && blue > 5 && blue < 23
-//                telemetry.addData("object detected : ", "Block");
-//            }
-//            else if (colorBlind.blue() >= 330) { //red > 49 && red < 60 && green > 65 && green < 85 && blue > 34 && blue < 54
-//                telemetry.addData("object detected : ", "Weefle");
-//            }
-//            else {
-//                telemetry.addData("object detected : ", "null");
-//            }
-//            telemetry.addData("red", colorBlind.red());
-//            telemetry.addData("green", colorBlind.green());
-//            telemetry.addData("blue", colorBlind.blue());
-                telemetry.addData("speed", speed);
-                telemetry.update();
+            hardware.leftSlide.setPower(-gamepad1.left_trigger);
+            hardware.rightSlide.setPower(-gamepad1.left_trigger);
+
+            telemetry.addData("speed", speed);
+            telemetry.addData("LeftPower ", hardware.leftSlide.getPower());
+            telemetry.addData("RightPower ", hardware.rightSlide.getPower());
+            telemetry.update();
             }
         }
     }

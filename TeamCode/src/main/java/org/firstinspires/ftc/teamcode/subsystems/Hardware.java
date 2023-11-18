@@ -18,6 +18,8 @@ public class Hardware {
     public DcMotor leftRear;
     public DcMotor rightRear;
     public DcMotor rightFront;
+    public DcMotor leftSlide;
+    public DcMotor rightSlide;
 //
 //    public RevColorSensorV3 upSlot;
 //
@@ -32,6 +34,9 @@ public class Hardware {
         leftRear = hardwareMap.get(DcMotor.class, "0");
         rightRear = hardwareMap.get(DcMotor.class, "1");
         rightFront = hardwareMap.get(DcMotor.class, "3");
+
+        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
+        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
 
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -48,6 +53,7 @@ public class Hardware {
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
         imu.initialize(parameters);
+
 //
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");
 //
