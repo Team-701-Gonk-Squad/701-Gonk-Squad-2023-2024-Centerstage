@@ -12,20 +12,17 @@ import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.subsystems.Hardware;
+import org.firstinspires.ftc.teamcode.visionanglesmath.Ploop;
 
 @TeleOp
 
 public class TeleOp701 extends LinearOpMode {
-
     Hardware hardware;
-
     double speed = 1;
-
-
+    Ploop looper;
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
-
         hardware = new Hardware(hardwareMap);
 
         waitForStart();
@@ -62,7 +59,7 @@ public class TeleOp701 extends LinearOpMode {
 
             double x = gamepad1.left_stick_x * -speed;
             double y = gamepad1.left_stick_y * -speed;
-            double turn = gamepad1.right_stick_x * -speed;
+            double x = gamepad1.right_stick_x * -speed;
 
             double theta = Math.atan2(y, x);
             double power = Math.hypot(x, y);
@@ -108,7 +105,11 @@ public class TeleOp701 extends LinearOpMode {
                 speed = 1;
             }
 
+            hardware.leftSlide.setPower(0);
+            hardware.rightSlide.setPower(0);
 
+            hardware.leftSlide.setPower(gamepad1.right_trigger);
+            hardware.rightSlide.setPower(gamepad1.right_trigger);
 
 //            if (gamepad1.right_bumper) {
 //                action4.setPower(1);
