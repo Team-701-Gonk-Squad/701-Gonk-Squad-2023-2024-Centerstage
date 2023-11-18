@@ -20,9 +20,12 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
-                                .splineTo(new Vector2d(-5, 5), Math.toRadians(180))
-                                .splineTo(new Vector2d(-140, 0), Math.toRadians(180))
+                        drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))
+                                .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
+                                .splineTo(new Vector2d(0, -35), Math.toRadians(0))
+                                .splineTo(new Vector2d(40, -35), Math.toRadians(0))
+                                .splineTo(new Vector2d(45, -56), Math.toRadians(270))
+                                .splineTo(new Vector2d(60, -60), Math.toRadians(0))
                                 .build()
                 );
 
@@ -30,7 +33,7 @@ public class MeepMeepTesting {
 //        try { img = ImageIO.read(new File("C:/Users/space/code/robotics/2023-2024-Centerstage/701-Gonk-Squad-2023-2024-Centerstage/MeepMeepTesting/src/main/java/com/example/meepmeeptesting/CENTERSTAGE-FIELD.png")); }
 //        catch (IOException e) {}
 
-        meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_KAI_DARK)
+        meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)

@@ -21,7 +21,7 @@ public class Ploop {
 
         double spinPower = 0.015*yaw;
         double strafePower = -0.6*x;
-        double straightPower = 0.2*(z-2);
+        double straightPower = 0.4*(z-2);
 
         if (yaw < -1 || yaw > 1) { // spin
             FrontLeftPower += spinPower;
@@ -35,7 +35,7 @@ public class Ploop {
             BackLeftPower += strafePower;
             BackRightPower -= strafePower;
             telemetry.addData("Strafe power: ", strafePower);
-        } if (z > 4 || z < 3.8) {
+        } if (z > 2.05 || z < 1.95) {
             FrontLeftPower += straightPower;
             FrontRightPower += straightPower;
             BackLeftPower += straightPower;
@@ -50,6 +50,6 @@ public class Ploop {
         hardware.rightRear.setPower(BackRightPower);
         telemetry.update();
 
-        return((yaw > -1 && yaw < 1) && (x < 0.1 && x > -0.1) && (z < 4 && z > 3.8));
+        return((yaw > -1 && yaw < 1) && (x < 0.1 && x > -0.1) && (z < 2.1 && z > 1.9));
     }
 }
