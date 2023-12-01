@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import static java.lang.Thread.sleep;
+
 import android.graphics.Color;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -16,121 +19,159 @@ import org.firstinspires.ftc.teamcode.visionanglesmath.Ploop;
 
 @TeleOp
 
-public class TeleOp701 extends LinearOpMode {
+public class TeleOp701 extends OpMode {
     Hardware hardware;
     double speed = 1;
     Ploop looper;
-    @Override
-    public void runOpMode() {
+    double cyclecount = 0;
+
+    public void init() {
         telemetry.addData("Status", "Initialized");
+
         hardware = new Hardware(hardwareMap);
 
-        waitForStart();
-        while (opModeIsActive()) {
-//            hardware.leftFront.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-//            hardware.leftFront.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-//            hardware.rightRear.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
-//            hardware.leftRear.setPower(((gamepad1.left_stick_y) + (gamepad1.left_stick_x) + (gamepad1.right_stick_x) * speed));
+        hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    }
 
-//            if (gamepad2.left_trigger > 0.1 && !gamepad2.left_bumper) {
-//                action1.setPower(gamepad2.left_trigger*-1);
-//            } else if (gamepad2.left_bumper){
-//                action1.setPower(1);
-//            }else{
-//                action1.setPower(0);
-//            }
+    @Override
+    public void loop() {
+
+
+
+        double x = gamepad1.left_stick_x * -speed;
+        double y = gamepad1.left_stick_y * -speed;
+        double turn = gamepad1.right_stick_x * -speed;
+
+        double theta = Math.atan2(y, x);
+        double power = Math.hypot(x, y);
+        double sin = Math.sin(theta - Math.PI / 4);
+        double cos = Math.cos(theta - Math.PI / 4);
+        double max = Math.max(Math.abs(sin), Math.abs(cos));
+        hardware.rightFront.setPower(power * cos / max + turn);
+        hardware.leftFront.setPower(power * sin / max - turn);
+        hardware.rightRear.setPower(power * sin / max + turn);
+        hardware.leftRear.setPower(power * cos / max - turn);
+        if ((power + Math.abs(turn)) > 1) {
+            hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
+            hardware.rightFront.setPower((hardware.rightFront.getPower()) / (power + turn));
+            hardware.rightRear.setPower((hardware.rightRear.getPower()) / (power + turn));
+            hardware.leftRear.setPower((hardware.leftRear.getPower()) / (power + turn));
+        }
+
+        if (gamepad1.dpad_down) {
+            speed = 0.35;
+        }
+        if (gamepad1.dpad_left) {
+            speed = 0.5;
+        }
+        if (gamepad1.dpad_up) {
+            speed = 0.8;
+        }
+        if (gamepad1.dpad_right) {
+            speed = 1;
+        }
+
+        telemetry.addData("speed", speed);
+
+//        hardware.leftSlide.setPower(gamepad2.right_trigger);
+//        hardware.rightSlide.setPower(gamepad2.right_trigger);
 //
-//            if (gamepad2.left_stick_y > 0.1) {
-//                action2.setPower(gamepad2.left_stick_y);
-//            } else if (gamepad2.left_stick_y < -0.1){
-//                action2.setPower(gamepad2.left_stick_y);
-//            }else{
-//                action2.setPower(0);
-//            }
-//
-//            if (gamepad2.right_stick_y>0.1) {
-//                action3.setPower(gamepad2.right_stick_y);
-//            } else if (gamepad2.right_stick_y<-0.1) {
-//                action3.setPower(gamepad2.right_stick_y);
-//            } else{
-//                action3.setPower(0);
-//            }
+//        hardware.leftSlide.setPower(-gamepad2.left_trigger);
+//        hardware.rightSlide.setPower(-gamepad2.left_trigger);
 
-
-            double x = gamepad1.left_stick_x * -speed;
-            double y = gamepad1.left_stick_y * -speed;
-            double x = gamepad1.right_stick_x * -speed;
-
-            double theta = Math.atan2(y, x);
-            double power = Math.hypot(x, y);
-            double sin = Math.sin(theta - Math.PI / 4);
-            double cos = Math.cos(theta - Math.PI / 4);
-            double max = Math.max(Math.abs(sin), Math.abs(cos));
-            hardware.rightFront.setPower(power * cos / max + turn);
-            hardware.leftFront.setPower(power * sin / max - turn);
-            hardware.rightRear.setPower(power * sin / max + turn);
-            hardware.leftRear.setPower(power * cos / max - turn);
-            if ((power + Math.abs(turn)) > 1) {
-                hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
-                hardware.rightFront.setPower((hardware.rightFront.getPower()) / (power + turn));
-                hardware.rightRear.setPower((hardware.rightRear.getPower()) / (power + turn));
-                hardware.leftRear.setPower((hardware.leftRear.getPower()) / (power + turn));
-            }
-
-            if ((gamepad1.a) || (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) + Math.abs(gamepad1.right_stick_x) <= 0.1)) {
-                hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                hardware.leftFront.setPower(0);
-                hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                hardware.rightRear.setPower(0);
-                hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                hardware.rightFront.setPower(0);
-                hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                hardware.leftRear.setPower(0);
-            } else {
-                hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            }
-            if (gamepad1.dpad_down) {
-                speed = 0.35;
-            }
-            if (gamepad1.dpad_left) {
-                speed = 0.5;
-            }
-            if (gamepad1.dpad_up) {
-                speed = 0.8;
-            }
-            if (gamepad1.dpad_right) {
-                speed = 1;
-            }
-
+        if (gamepad2.right_trigger != 0) {
+            hardware.leftSlide.setPower(1);
+            hardware.rightSlide.setPower(1);
+        }
+        else if (gamepad2.left_trigger != 0) {
+            hardware.leftSlide.setPower(-1);
+            hardware.rightSlide.setPower(-1);
+        } else {
             hardware.leftSlide.setPower(0);
             hardware.rightSlide.setPower(0);
+        }
 
-            hardware.leftSlide.setPower(gamepad1.right_trigger);
-            hardware.rightSlide.setPower(gamepad1.right_trigger);
+        telemetry.addData("leftslidepower", hardware.leftSlide.getPower());
+        telemetry.addData("rightslidepower", hardware.rightSlide.getPower());
 
-//            if (gamepad1.right_bumper) {
-//                action4.setPower(1);
-//            } else {
-//                action4.setPower(0);
-//            }
-//            if (colorBlind.blue() <= 250) { //red > 50 && red < 70 && green > 50 && green < 70 && blue > 5 && blue < 23
-//                telemetry.addData("object detected : ", "Block");
-//            }
-//            else if (colorBlind.blue() >= 330) { //red > 49 && red < 60 && green > 65 && green < 85 && blue > 34 && blue < 54
-//                telemetry.addData("object detected : ", "Weefle");
-//            }
-//            else {
-//                telemetry.addData("object detected : ", "null");
-//            }
-//            telemetry.addData("red", colorBlind.red());
-//            telemetry.addData("green", colorBlind.green());
-//            telemetry.addData("blue", colorBlind.blue());
-                telemetry.addData("Power On Front right", hardware.rightFront.getPower());
-                telemetry.addData("speed", speed);
-                telemetry.update();
-            }
+        hardware.intake.setPower(gamepad1.right_trigger);
+        hardware.intake.setPower(gamepad1.right_trigger);
+
+        hardware.intake.setPower(-gamepad1.left_trigger);
+        hardware.intake.setPower(-gamepad1.left_trigger);
+
+        if (gamepad2.a) {
+            hardware.door.setPosition(1);
+        } else if (gamepad2.b) {
+            hardware.door.setPosition(0);
+        }
+
+        // plane
+        if (gamepad1.y && gamepad2.y) {
+            hardware.plane.setPower(-1);
+            try {
+                Thread.sleep(50);
+            } catch (Exception e) {telemetry.addData("error", e);}
+            hardware.plane.setPower(0);
+        }
+
+//            cyclecount += 1;
+//            telemetry.addData("Cycles", cyclecount);
+
+            telemetry.update();
+    }
+
+    public void driveloop() {
+
+    }
+
+    public void speedloop() {
+        if (gamepad1.dpad_down) {
+            speed = 0.35;
+        }
+        if (gamepad1.dpad_left) {
+            speed = 0.5;
+        }
+        if (gamepad1.dpad_up) {
+            speed = 0.8;
+        }
+        if (gamepad1.dpad_right) {
+            speed = 1;
+        }
+
+        telemetry.addData("speed", speed);
+    }
+
+    public void slideloop() {
+        hardware.leftSlide.setPower(0);
+        hardware.rightSlide.setPower(0);
+
+        hardware.leftSlide.setPower(gamepad2.right_trigger);
+        hardware.rightSlide.setPower(gamepad2.right_trigger);
+
+        hardware.leftSlide.setPower(-gamepad2.left_trigger);
+        hardware.rightSlide.setPower(-gamepad2.left_trigger);
+    }
+
+    public void intakeloop() {
+        hardware.intake.setPower(0);
+        hardware.intake.setPower(0);
+
+        hardware.intake.setPower(gamepad1.right_trigger);
+        hardware.intake.setPower(gamepad1.right_trigger);
+
+        hardware.intake.setPower(-gamepad1.left_trigger);
+        hardware.intake.setPower(-gamepad1.left_trigger);
+    }
+
+    public void doorloop() {
+        if (gamepad2.a) {
+            hardware.door.setPosition(1);
+        } else if (gamepad2.b) {
+            hardware.door.setPosition(0);
         }
     }
+}

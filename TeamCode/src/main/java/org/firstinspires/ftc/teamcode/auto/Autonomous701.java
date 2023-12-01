@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -57,55 +58,38 @@ public class Autonomous701 extends LinearOpMode{
 //        Trajectory trajectoryRight = drive.trajectoryBuilder(trajectoryLeft.end())
 //                .strafeRight(DISTANCE)
 //                .build();
-        TrajectorySequence bottomRight = drive.trajectorySequenceBuilder(new Pose2d(-62, -35, Math.toRadians(0)))
-                .forward(27)
-                .turn(Math.toRadians(-90))
-                .forward(27*2.85)
-                .turn(Math.toRadians(-90))
-                .forward(27)
+//        TrajectorySequence bottomRight = drive.trajectorySequenceBuilder(new Pose2d(-62, -35, Math.toRadians(0)))
+//                .forward(27)
+//                .turn(Math.toRadians(-90))
+//                .forward(27*2.85)
+//                .turn(Math.toRadians(-90))
+//                .forward(27)
+//                .build();
+//        TrajectorySequence TESTYWESTY = drive.trajectorySequenceBuilder(new Pose2d(-62,62, Math.toRadians(0)))
+//                .forward(120)
+//                .turn(Math.toRadians(180))
+//                .strafeLeft(120)
+//                .turn(Math.toRadians(180))
+//                .back(120)
+//                .turn(Math.toRadians(90))
+//                .forward(120)
+//                .build();
+        TrajectorySequence preboard = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
+                .splineTo(new Vector2d(12, 46), Math.toRadians(270))
+                .splineTo(new Vector2d(18, 35), Math.toRadians(0))
                 .build();
-        TrajectorySequence TESTYWESTY = drive.trajectorySequenceBuilder(new Pose2d(-62,62, Math.toRadians(0)))
-                .forward(120)
-                .turn(Math.toRadians(180))
-                .strafeLeft(120)
-                .turn(Math.toRadians(180))
-                .back(120)
-                .turn(Math.toRadians(90))
-                .forward(120)
+
+        TrajectorySequence postboard = drive.trajectorySequenceBuilder(new Pose2d(18, 35, Math.toRadians(0)))
+                .splineTo(new Vector2d(40, 35), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(45, 55), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(60, 55), Math.toRadians(0))
                 .build();
 
         waitForStart();
 
-        while (opModeIsActive() && !isStopRequested()) {
-            fl.setPower(0.5);
-            fr.setPower(0.5);
-            bl.setPower(0.5);
-            br.setPower(0.5);
-            sleep(1000);
-            fl.setPower(0);
-            fr.setPower(0);
-            bl.setPower(0);
-            br.setPower(0);
-            sleep(500);
-            fl.setPower(-0.5);
-            fr.setPower(-0.5);
-            bl.setPower(-0.5);
-            br.setPower(-0.5);
-            sleep(1000);
-            fl.setPower(0);
-            fr.setPower(0);
-            bl.setPower(0);
-            br.setPower(0);
-            sleep(1000);
-            //drive.followTrajectorySequence(TESTYWESTY);
-        }
-
-
-
-
-
-
-
-
+        drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
+        drive.followTrajectorySequence(preboard);
+        sleep(1000);
+        drive.followTrajectorySequence(postboard);
     }
 }

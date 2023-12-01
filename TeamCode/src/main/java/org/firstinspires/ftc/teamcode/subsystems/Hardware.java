@@ -1,14 +1,17 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -20,6 +23,12 @@ public class Hardware {
     public DcMotor rightFront;
     public DcMotor leftSlide;
     public DcMotor rightSlide;
+    public DcMotor verticalActuator;
+    public DcMotor intake;
+    public Servo door;
+    public Servo boxRotation;
+    public CRServo plane;
+    public LynxModule lynx;
 //
 //    public RevColorSensorV3 upSlot;
 //
@@ -30,13 +39,22 @@ public class Hardware {
 //    public DistanceSensor distance;
 
     public Hardware(HardwareMap hardwareMap) {
+
         leftFront = hardwareMap.get(DcMotor.class, "2");
         leftRear = hardwareMap.get(DcMotor.class, "0");
         rightRear = hardwareMap.get(DcMotor.class, "1");
         rightFront = hardwareMap.get(DcMotor.class, "3");
 
-        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
-        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
+        leftSlide = hardwareMap.get(DcMotor.class, "E0");
+        rightSlide = hardwareMap.get(DcMotor.class, "E1");
+
+        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        verticalActuator = hardwareMap.get(DcMotor.class, "E2");
+        intake = hardwareMap.get(DcMotor.class, "E3");
 
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -54,7 +72,11 @@ public class Hardware {
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
         imu.initialize(parameters);
 
-//
+        door = hardwareMap.get(Servo.class, "ES0");
+        boxRotation = hardwareMap.get(Servo.class, "ES1");
+        plane = hardwareMap.get(CRServo.class, "S0");
+
+
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");
 //
 //        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");

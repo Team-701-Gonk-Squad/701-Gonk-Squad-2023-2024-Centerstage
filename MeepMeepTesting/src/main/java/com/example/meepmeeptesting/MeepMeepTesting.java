@@ -20,7 +20,7 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(12, -60, Math.toRadians(90)))  // start coordinates: (-35, +-60)   (12, +-60)  |  angles:90 or 270
+                        drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))  // start coordinates: (-35, +-60)   (12, +-60)  |  angles:90 or 270
                                 //TODO: Base method with just splineTo
 //                                .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
 //                                .splineTo(new Vector2d(0, -35), Math.toRadians(0))
@@ -45,19 +45,19 @@ public class MeepMeepTesting {
 //                                .build()
 
                                 //TODO: Blue side backstage side parking base
-//                                .splineTo(new Vector2d(12, 46), Math.toRadians(270))
-//                                .splineTo(new Vector2d(18, 35), Math.toRadians(0))
-//                                .splineTo(new Vector2d(40, 35), Math.toRadians(0))
-//                                .splineToConstantHeading(new Vector2d(45, 59), Math.toRadians(0))
-//                                .splineToConstantHeading(new Vector2d(60, 60), Math.toRadians(0))
-//                                .build()
-                                //TODO: Red side backstage side parking base
-                                .splineTo(new Vector2d(12, -46), Math.toRadians(90))
-                                .splineTo(new Vector2d(18, -35), Math.toRadians(0))
-                                .splineTo(new Vector2d(40, -35), Math.toRadians(0))
-                                .splineToConstantHeading(new Vector2d(45, -59), Math.toRadians(0))
-                                .splineToConstantHeading(new Vector2d(60, -60), Math.toRadians(0))
+                                .splineTo(new Vector2d(12, 46), Math.toRadians(270))
+                                .splineTo(new Vector2d(18, 35), Math.toRadians(0))
+                                .splineTo(new Vector2d(40, 35), Math.toRadians(0))
+                                .splineToConstantHeading(new Vector2d(45, 55), Math.toRadians(0))
+                                .splineToConstantHeading(new Vector2d(60, 55), Math.toRadians(0))
                                 .build()
+                                //TODO: Red side backstage side parking base
+//                                .splineTo(new Vector2d(12, -46), Math.toRadians(90))
+//                                .splineTo(new Vector2d(18, -35), Math.toRadians(0))
+//                                .splineTo(new Vector2d(40, -35), Math.toRadians(0))
+//                                .splineToConstantHeading(new Vector2d(45, -59), Math.toRadians(0))
+//                                .splineToConstantHeading(new Vector2d(60, -60), Math.toRadians(0))
+//                                .build()
                 );
 
 //        Image img = null;
