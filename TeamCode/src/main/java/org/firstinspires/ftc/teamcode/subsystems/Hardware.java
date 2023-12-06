@@ -76,7 +76,6 @@ public class Hardware {
         boxRotation = hardwareMap.get(Servo.class, "ES1");
         plane = hardwareMap.get(CRServo.class, "S0");
 
-
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");
 //
 //        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");

@@ -38,9 +38,6 @@ public class TeleOp701 extends OpMode {
 
     @Override
     public void loop() {
-
-
-
         double x = gamepad1.left_stick_x * -speed;
         double y = gamepad1.left_stick_y * -speed;
         double turn = gamepad1.right_stick_x * -speed;
@@ -75,12 +72,6 @@ public class TeleOp701 extends OpMode {
         }
 
         telemetry.addData("speed", speed);
-
-//        hardware.leftSlide.setPower(gamepad2.right_trigger);
-//        hardware.rightSlide.setPower(gamepad2.right_trigger);
-//
-//        hardware.leftSlide.setPower(-gamepad2.left_trigger);
-//        hardware.rightSlide.setPower(-gamepad2.left_trigger);
 
         if (gamepad2.right_trigger != 0) {
             hardware.leftSlide.setPower(1);
@@ -117,9 +108,6 @@ public class TeleOp701 extends OpMode {
             } catch (Exception e) {telemetry.addData("error", e);}
             hardware.plane.setPower(0);
         }
-
-//            cyclecount += 1;
-//            telemetry.addData("Cycles", cyclecount);
 
             telemetry.update();
     }
