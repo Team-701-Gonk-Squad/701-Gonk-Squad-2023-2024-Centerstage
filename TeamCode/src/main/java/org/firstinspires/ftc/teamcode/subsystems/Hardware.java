@@ -29,10 +29,10 @@ public class Hardware {
     public Servo boxRotation;
     public CRServo plane;
     public LynxModule lynx;
-//
-//    public RevColorSensorV3 upSlot;
-//
-//    public RevColorSensorV3 downSlot;
+
+    public RevColorSensorV3 upSlot;
+
+    public RevColorSensorV3 downSlot;
 
     public IMU imu;
 //
@@ -78,18 +78,19 @@ public class Hardware {
 
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");
 //
-//        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");
-//
-//        downSlot = hardwareMap.get(RevColorSensorV3.class, "color port 3");
+        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");
+
+        downSlot = hardwareMap.get(RevColorSensorV3.class, "color port 3");
     }
 
-//    public String[] boxContents() {
-//        if (upSlot.getDistance() )
-//
-//
-//        String[] returnArray = {};
-//        return returnArray;
-//    }
+    public Boolean pixelCheck() {
+        if (upSlot.getDistance(DistanceUnit.MM) < 30 && downSlot.getDistance(DistanceUnit.MM) < 30) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public void setRaw(double Lr, double Lf, double Rr, double Rf) {
         leftRear.setPower(Lr);

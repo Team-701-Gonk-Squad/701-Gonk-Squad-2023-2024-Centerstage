@@ -17,6 +17,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.subsystems.Hardware;
 import org.firstinspires.ftc.teamcode.visionanglesmath.Ploop;
 
+import java.util.Timer;
+
 @TeleOp
 
 public class Tele2 extends LinearOpMode {
@@ -24,77 +26,105 @@ public class Tele2 extends LinearOpMode {
     double speed = 1;
     Ploop looper;
     double cyclecount = 0;
+    double loop = 0;
+
+    Timer timer = new Timer();
+    Boolean keepPixels = true;
 
     public void runOpMode() {
 
-        telemetry.addData("Status", "Initialized");
+        /* init */ {
+            telemetry.addData("Status", "Initialized");
 
-        hardware = new Hardware(hardwareMap);
+            hardware = new Hardware(hardwareMap);
 
-        hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            hardware.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            hardware.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
 
         waitForStart();
 
         while (opModeIsActive()) {
-            double x = gamepad1.left_stick_x * speed;
-            double y = gamepad1.left_stick_y * speed;
-            double turn = gamepad1.right_stick_y * speed;
 
-            double theta = Math.atan2(y, x);
-            double power = Math.hypot(x, y);
-            double sin = Math.sin(theta - Math.PI / 4);
-            double cos = Math.cos(theta - Math.PI / 4);
-            double max = Math.max(Math.abs(sin), Math.abs(cos));
-            hardware.rightFront.setPower(power * cos / max + turn);
-            hardware.leftFront.setPower(power * sin / max - turn);
-            hardware.rightRear.setPower(power * sin / max + turn);
-            hardware.leftRear.setPower(power * cos / max - turn);
-            if ((power + Math.abs(turn)) > 1) {
-                hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
-                hardware.rightFront.setPower((hardware.rightFront.getPower()) / (power + turn));
-                hardware.rightRear.setPower((hardware.rightRear.getPower()) / (power + turn));
-                hardware.leftRear.setPower((hardware.leftRear.getPower()) / (power + turn));
+            /* Drive Control */ {
+                double x = gamepad1.left_stick_x * speed;
+                double y = gamepad1.left_stick_y * speed;
+                double turn = gamepad1.right_stick_y * speed;
+
+                double theta = Math.atan2(y, x);
+                double power = Math.hypot(x, y);
+                double sin = Math.sin(theta - Math.PI / 4);
+                double cos = Math.cos(theta - Math.PI / 4);
+                double max = Math.max(Math.abs(sin), Math.abs(cos));
+                hardware.rightFront.setPower(power * cos / max + turn);
+                hardware.leftFront.setPower(power * sin / max - turn);
+                hardware.rightRear.setPower(power * sin / max + turn);
+                hardware.leftRear.setPower(power * cos / max - turn);
+                if ((power + Math.abs(turn)) > 1) {
+                    hardware.leftFront.setPower((hardware.leftFront.getPower()) / (power + turn));
+                    hardware.rightFront.setPower((hardware.rightFront.getPower()) / (power + turn));
+                    hardware.rightRear.setPower((hardware.rightRear.getPower()) / (power + turn));
+                    hardware.leftRear.setPower((hardware.leftRear.getPower()) / (power + turn));
+                }
             }
 
-            if (gamepad1.dpad_down) {
-                speed = 0.35;
+            /* Speed Control */ {
+                speed = (gamepad1.right_trigger*0.7)+0.3;
             }
-            if (gamepad1.dpad_left) {
-                speed = 0.5;
+
+            // Arm up with encoders intake sequence
+            if (gamepad1.a) {
+                hardware.door.setPosition(0);
+                hardware.intake.setPower(-1);
             }
-            if (gamepad1.dpad_up) {
-                speed = 0.8;
+
+            if (hardware.pixelCheck() && keepPixels) {
+                hardware.door.setPosition(1);
+                hardware.intake.setPower(0);
             }
-            if (gamepad1.dpad_right) {
-                speed = 1;
-            }
+
+            //set powers to pull up hooks
+//            hardware.verticalActuator(gamepad2.left_stick_y);
+            
+
+            // if (gamepad1.dpad_down) {
+            //     speed = 0.35;
+            // }
+            // if (gamepad1.dpad_left) {
+            //     speed = 0.5;
+            // }
+            // if (gamepad1.dpad_up) {
+            //     speed = 0.8;
+            // }
+            // if (gamepad1.dpad_right) {
+            //     speed = 1;
+            // }
 
             telemetry.addData("speed", speed);
 
-            if (gamepad2.right_trigger != 0) {
-                hardware.boxRotation.setPosition(0);
-                hardware.leftSlide.setPower(0.5);
-                hardware.rightSlide.setPower(0.5);
-            } else if (gamepad2.left_trigger != 0) {
-                hardware.boxRotation.setPosition(1);
-                hardware.leftSlide.setPower(-0.2);
-                hardware.rightSlide.setPower(-0.2);
-            } else {
-                hardware.leftSlide.setPower(0);
-                hardware.rightSlide.setPower(0);
-            }
+            // if (gamepad2.right_trigger != 0) {
+            //     hardware.boxRotation.setPosition(0);
+            //     hardware.leftSlide.setPower(0.5);
+            //     hardware.rightSlide.setPower(0.5);
+            // } else if (gamepad2.left_trigger != 0) {
+            //     hardware.boxRotation.setPosition(1);
+            //     hardware.leftSlide.setPower(-0.2);
+            //     hardware.rightSlide.setPower(-0.2);
+            // } else {
+            //     hardware.leftSlide.setPower(0);
+            //     hardware.rightSlide.setPower(0);
+            // }
 
             telemetry.addData("leftslidepower", hardware.leftSlide.getPower());
             telemetry.addData("rightslidepower", hardware.rightSlide.getPower());
 
-            hardware.intake.setPower(gamepad1.right_trigger);
-            hardware.intake.setPower(gamepad1.right_trigger);
+            // hardware.intake.setPower(gamepad1.right_trigger);
+            // hardware.intake.setPower(gamepad1.right_trigger);
 
-            hardware.intake.setPower(-gamepad1.left_trigger);
-            hardware.intake.setPower(-gamepad1.left_trigger);
+            // hardware.intake.setPower(-gamepad1.left_trigger);
+            // hardware.intake.setPower(-gamepad1.left_trigger);
 
             if (gamepad2.a) {
                 hardware.door.setPosition(0.28);
@@ -113,9 +143,9 @@ public class Tele2 extends LinearOpMode {
                 hardware.plane.setPower(0);
             }
 
-            if (gamepad1.a) {
+            if (gamepad2.x) {
                 hardware.verticalActuator.setPower(1);
-            } else if (gamepad1.b) {
+            } else if (gamepad2.y) {
                 hardware.verticalActuator.setPower(-1);
             } else {
                 hardware.verticalActuator.setPower(0);

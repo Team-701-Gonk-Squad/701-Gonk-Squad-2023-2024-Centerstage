@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous
 
-
 public class TrajectoryBrokeMaybe extends LinearOpMode {
 
     private DcMotor fl;
