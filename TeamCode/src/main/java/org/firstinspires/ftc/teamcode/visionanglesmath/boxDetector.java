@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.visionanglesmath;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -48,6 +49,8 @@ public class boxDetector extends LinearOpMode {
 //            } else {
 //                telemetry.addData("Color", "None");
 //            }
+
+            telemetry.addData("Distance: ", hardware.distance.getDistance(DistanceUnit.CM));
 
 
             sleep(100);

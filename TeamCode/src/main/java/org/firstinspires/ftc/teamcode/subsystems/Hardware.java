@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -29,7 +30,7 @@ public class Hardware {
     public Servo boxRotation;
     public CRServo plane;
     public LynxModule lynx;
-
+    public Rev2mDistanceSensor distance;
     public RevColorSensorV3 upSlot;
 
     public RevColorSensorV3 downSlot;
@@ -81,6 +82,8 @@ public class Hardware {
         upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");
 
         downSlot = hardwareMap.get(RevColorSensorV3.class, "color port 3");
+
+        distance = hardwareMap.get(Rev2mDistanceSensor.class, "distance");
     }
 
     public Boolean pixelCheck() {
