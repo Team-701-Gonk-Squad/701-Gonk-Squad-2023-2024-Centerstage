@@ -78,9 +78,9 @@ public class Hardware {
 
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");
 //
-        upSlot = hardwareMap.get(RevColorSensorV3.class, "color port 2");
+        bottomSlot = hardwareMap.get(RevColorSensorV3.class, "I2C2");
 
-        downSlot = hardwareMap.get(RevColorSensorV3.class, "color port 3");
+        topSlot = hardwareMap.get(RevColorSensorV3.class, "I2C1");
     }
 
     public Boolean pixelCheck() {
