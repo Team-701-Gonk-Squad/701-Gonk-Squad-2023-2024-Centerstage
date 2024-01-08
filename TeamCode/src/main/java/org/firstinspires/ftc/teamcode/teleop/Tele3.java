@@ -78,14 +78,15 @@ public class Tele3 extends LinearOpMode {
 
             // Arm up with encoders intake sequence
             if (gamepad2.a) {
+                hardware.door.setPosition(0);
                 hardware.leftSlide.setPower(-0.75);
                 hardware.rightSlide.setPower(-0.75);
                 hardware.boxRotation.setPosition(1);
-                hardware.door.setPosition(0);
-                hardware.intake.setPower(-1);
+                hardware.intake.setPower(1);
             }
+
             if ((hardware.pixelCheck() && keepPixels) || gamepad1.b) {
-                hardware.door.setPosition(0.28);
+                hardware.door.setPosition(0.25);
                 hardware.intake.setPower(0);
                 hardware.leftSlide.setPower(1);
                 hardware.rightSlide.setPower(1);

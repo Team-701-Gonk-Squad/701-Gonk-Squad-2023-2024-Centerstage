@@ -31,12 +31,12 @@ public class Hardware {
     public CRServo plane;
     public LynxModule lynx;
     public Rev2mDistanceSensor distance;
-    public RevColorSensorV3 upSlot;
+    public RevColorSensorV3 topSlot;
 
-    public RevColorSensorV3 downSlot;
+    public RevColorSensorV3 bottomSlot;
 
     public IMU imu;
-//
+
 //    public DistanceSensor distance;
 
     public Hardware(HardwareMap hardwareMap) {
@@ -57,10 +57,10 @@ public class Hardware {
         verticalActuator = hardwareMap.get(DcMotor.class, "E2");
         intake = hardwareMap.get(DcMotor.class, "E3");
 
-        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -78,14 +78,14 @@ public class Hardware {
         plane = hardwareMap.get(CRServo.class, "S0");
 
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");
-//
-        bottomSlot = hardwareMap.get(RevColorSensorV3.class, "I2C2");
-        distance = hardwareMap.get(Rev2mDistanceSensor.class, "I2C0");
-        topSlot = hardwareMap.get(RevColorSensorV3.class, "I2C1");
+
+        bottomSlot = hardwareMap.get(RevColorSensorV3.class, "I2C3");
+        distance = hardwareMap.get(Rev2mDistanceSensor.class, "I2C1");
+        topSlot = hardwareMap.get(RevColorSensorV3.class, "I2C2");
     }
 
     public Boolean pixelCheck() {
-        if (upSlot.getDistance(DistanceUnit.MM) < 30 && downSlot.getDistance(DistanceUnit.MM) < 30) {
+        if (topSlot.getDistance(DistanceUnit.MM) < 30 && bottomSlot.getDistance(DistanceUnit.MM) < 30) {
             return true;
         }
         else {
