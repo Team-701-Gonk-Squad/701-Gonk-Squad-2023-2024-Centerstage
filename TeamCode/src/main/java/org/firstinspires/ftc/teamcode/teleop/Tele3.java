@@ -135,9 +135,10 @@ public class Tele3 extends LinearOpMode {
             // hardware.intake.setPower(-gamepad1.left_trigger);
             // hardware.intake.setPower(-gamepad1.left_trigger);
 
-            if (gamepad2.a) {
-                hardware.door.setPosition(0.28);
-            } else if (gamepad2.b) {
+//            if (gamepad2.a) {
+//                hardware.door.setPosition(0.28);
+            //}
+            if (gamepad2.b) {
                 hardware.door.setPosition(0);
             }
 
@@ -160,9 +161,6 @@ public class Tele3 extends LinearOpMode {
                 hardware.verticalActuator.setPower(0);
             }
 
-            if (gamepad1.right_stick_y > 0.1){
-                telemetry.addData("its good", "maybe");
-            }
             telemetry.update();
         }
     }
