@@ -73,8 +73,8 @@ public class Hardware {
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
         imu.initialize(parameters);
 
-        door = hardwareMap.get(Servo.class, "ES0");
-        boxRotation = hardwareMap.get(Servo.class, "ES1");
+        door = hardwareMap.get(Servo.class, "ES1");
+        boxRotation = hardwareMap.get(Servo.class, "ES0");
         plane = hardwareMap.get(CRServo.class, "S0");
 
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");

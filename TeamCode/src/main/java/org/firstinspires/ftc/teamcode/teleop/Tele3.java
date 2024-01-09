@@ -81,44 +81,32 @@ public class Tele3 extends LinearOpMode {
                 hardware.door.setPosition(0);
                 hardware.leftSlide.setPower(-0.75);
                 hardware.rightSlide.setPower(-0.75);
-                hardware.boxRotation.setPosition(0);
+                hardware.boxRotation.setPosition(1);
                 hardware.intake.setPower(1);
             }
 
-            if ((hardware.pixelCheck() && keepPixels) || gamepad1.b) {
+            if (gamepad1.b) {
                 hardware.door.setPosition(0.25);
                 hardware.intake.setPower(0);
                 hardware.leftSlide.setPower(1);
                 hardware.rightSlide.setPower(1);
                 sleep(400);
-                hardware.boxRotation.setPosition(1);
+                hardware.boxRotation.setPosition(0);
+            }
+
+            if (gamepad2.b) {
+                hardware.door.setPosition(0);
             }
 
             //set powers to pull up hooks
             hardware.verticalActuator.setPower(-(gamepad2.left_stick_y) * 5);
 
-
-            // if (gamepad1.dpad_down) {
-            //     speed = 0.35;
-            // }
-            // if (gamepad1.dpad_left) {
-            //     speed = 0.5;
-            // }
-            // if (gamepad1.dpad_up) {
-            //     speed = 0.8;
-            // }
-            // if (gamepad1.dpad_right) {
-            //     speed = 1;
-            // }
-
             telemetry.addData("speed", speed);
 
             if (gamepad2.right_trigger != 0) {
-                //hardware.boxRotation.setPosition(0);
                 hardware.leftSlide.setPower(0.75);
                 hardware.rightSlide.setPower(0.75);
             } else if (gamepad2.left_trigger != 0) {
-                //hardware.boxRotation.setPosition(1);
                 hardware.leftSlide.setPower(-0.75);
                 hardware.rightSlide.setPower(-0.75);
             } else {
@@ -128,19 +116,6 @@ public class Tele3 extends LinearOpMode {
 
             telemetry.addData("leftslidepower", hardware.leftSlide.getPower());
             telemetry.addData("rightslidepower", hardware.rightSlide.getPower());
-
-            // hardware.intake.setPower(gamepad1.right_trigger);
-            // hardware.intake.setPower(gamepad1.right_trigger);
-
-            // hardware.intake.setPower(-gamepad1.left_trigger);
-            // hardware.intake.setPower(-gamepad1.left_trigger);
-
-//            if (gamepad2.a) {
-//                hardware.door.setPosition(0.28);
-            //}
-            if (gamepad2.b) {
-                hardware.door.setPosition(0);
-            }
 
             // plane
             if (gamepad1.y && gamepad2.y) {
@@ -163,10 +138,6 @@ public class Tele3 extends LinearOpMode {
 
             telemetry.update();
         }
-    }
-
-    public void driveloop() {
-
     }
 
     public void speedloop() {
