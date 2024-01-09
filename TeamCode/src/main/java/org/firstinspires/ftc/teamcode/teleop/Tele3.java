@@ -81,7 +81,7 @@ public class Tele3 extends LinearOpMode {
                 hardware.door.setPosition(0);
                 hardware.leftSlide.setPower(-0.75);
                 hardware.rightSlide.setPower(-0.75);
-                hardware.boxRotation.setPosition(1);
+                hardware.boxRotation.setPosition(0);
                 hardware.intake.setPower(1);
             }
 
@@ -91,7 +91,7 @@ public class Tele3 extends LinearOpMode {
                 hardware.leftSlide.setPower(1);
                 hardware.rightSlide.setPower(1);
                 sleep(400);
-                hardware.boxRotation.setPosition(0);
+                hardware.boxRotation.setPosition(1);
             }
 
             //set powers to pull up hooks
