@@ -40,7 +40,6 @@ public class Hardware {
 //    public DistanceSensor distance;
 
     public Hardware(HardwareMap hardwareMap) {
-
         leftFront = hardwareMap.get(DcMotor.class, "2");
         leftRear = hardwareMap.get(DcMotor.class, "0");
         rightRear = hardwareMap.get(DcMotor.class, "1");
