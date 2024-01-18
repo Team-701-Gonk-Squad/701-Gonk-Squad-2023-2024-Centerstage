@@ -16,7 +16,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-
 public class Hardware {
     public DcMotor leftFront;
     public DcMotor leftRear;
@@ -37,7 +36,7 @@ public class Hardware {
 
     public IMU imu;
 
-//    public DistanceSensor distance;
+    // public DistanceSensor distance;
 
     public Hardware(HardwareMap hardwareMap) {
         leftFront = hardwareMap.get(DcMotor.class, "2");
@@ -76,18 +75,17 @@ public class Hardware {
         boxRotation = hardwareMap.get(Servo.class, "ES0");
         plane = hardwareMap.get(CRServo.class, "S0");
 
-//        distance = hardwareMap.get(DistanceSensor.class, "distance");
+        // distance = hardwareMap.get(DistanceSensor.class, "distance");
 
         bottomSlot = hardwareMap.get(RevColorSensorV3.class, "I2C3");
-//        distance = hardwareMap.get(Rev2mDistanceSensor.class, "I2C1");
+        // distance = hardwareMap.get(Rev2mDistanceSensor.class, "I2C1");
         topSlot = hardwareMap.get(RevColorSensorV3.class, "I2C2");
     }
 
     public Boolean pixelCheck() {
         if (topSlot.getDistance(DistanceUnit.CM) < 2 && bottomSlot.getDistance(DistanceUnit.CM) < 2) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -99,9 +97,9 @@ public class Hardware {
         rightRear.setPower(Rr);
     }
 
-//    public double getDistance() {
-//        return distance.getDistance(DistanceUnit.MM);
-//    }
+    // public double getDistance() {
+    // return distance.getDistance(DistanceUnit.MM);
+    // }
 
     public final void sleep(long milliseconds) {
         try {
@@ -113,26 +111,26 @@ public class Hardware {
 
     public void strafeLeft(double power, double seconds) {
         rightFront.setPower(power);
-        rightRear.setPower(power*-1);
-        leftFront.setPower(power*-1);
+        rightRear.setPower(power * -1);
+        leftFront.setPower(power * -1);
         leftRear.setPower(power);
-        sleep((long)(seconds*100));
+        sleep((long) (seconds * 100));
     }
 
     public void strafeRight(double power, double seconds) {
-        rightFront.setPower(power*-1);
+        rightFront.setPower(power * -1);
         rightRear.setPower(power);
         leftFront.setPower(power);
-        leftRear.setPower(power*-1);
-        sleep((long)(seconds*100));
+        leftRear.setPower(power * -1);
+        sleep((long) (seconds * 100));
     }
 
     public void backward(double power, double seconds) {
-        rightFront.setPower(power*-1);
-        rightRear.setPower(power*-1);
-        leftFront.setPower(power*-1);
-        leftRear.setPower(power*-1);
-        sleep((long)(seconds*100));
+        rightFront.setPower(power * -1);
+        rightRear.setPower(power * -1);
+        leftFront.setPower(power * -1);
+        leftRear.setPower(power * -1);
+        sleep((long) (seconds * 100));
     }
 
     public void forward(double power, double seconds) {
@@ -140,46 +138,46 @@ public class Hardware {
         rightRear.setPower(power);
         leftFront.setPower(power);
         leftRear.setPower(power);
-        sleep((long)(seconds*100));
+        sleep((long) (seconds * 100));
     }
 
     public void spinLeft(double power, double seconds) {
-        rightFront.setPower(power*-1);
-        rightRear.setPower(power*-1);
+        rightFront.setPower(power * -1);
+        rightRear.setPower(power * -1);
         leftFront.setPower(power);
         leftRear.setPower(power);
-        sleep((long)(seconds*100));
+        sleep((long) (seconds * 100));
     }
 
     public void spinRight(double power, double seconds) {
         rightFront.setPower(power);
         rightRear.setPower(power);
-        leftFront.setPower(power*-1);
-        leftRear.setPower(power*-1);
-        sleep((long)(seconds*100));
+        leftFront.setPower(power * -1);
+        leftRear.setPower(power * -1);
+        sleep((long) (seconds * 100));
     }
 
     public void forward() {
-        forward(1,0);
+        forward(1, 0);
     }
 
     public void strafeLeft() {
-        strafeLeft(1,0);
+        strafeLeft(1, 0);
     }
 
     public void strafeRight() {
-        strafeRight(1,0);
+        strafeRight(1, 0);
     }
 
     public void backward() {
-        backward(1,0);
+        backward(1, 0);
     }
 
     public void spinLeft() {
-        spinLeft(1,0);
+        spinLeft(1, 0);
     }
 
     public void spinRight() {
-        spinRight(1,0);
+        spinRight(1, 0);
     }
 }

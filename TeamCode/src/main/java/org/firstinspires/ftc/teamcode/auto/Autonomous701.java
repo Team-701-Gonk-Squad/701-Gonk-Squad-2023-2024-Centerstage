@@ -71,15 +71,45 @@ public class Autonomous701 extends LinearOpMode{
 //                .turn(Math.toRadians(90))
 //                .forward(120)
 //                .build();
-        TrajectorySequence preboard = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
+
+        TrajectorySequence preboardBlueBackstage = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
                 .splineTo(new Vector2d(12, 46), Math.toRadians(270))
                 .splineTo(new Vector2d(18, 35), Math.toRadians(0))
-                .build();
-
-        TrajectorySequence postboard = drive.trajectorySequenceBuilder(new Pose2d(18, 35, Math.toRadians(0)))
                 .splineTo(new Vector2d(40, 35), Math.toRadians(0))
+                .build();
+        TrajectorySequence postboardBlueBackstage = drive.trajectorySequenceBuilder(new Pose2d(18, 35, Math.toRadians(0)))
                 .splineToConstantHeading(new Vector2d(45, 55), Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(60, 55), Math.toRadians(0))
+                .build();
+
+        TrajectorySequence preboardBlueNonBackstage = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(270)))
+                .splineTo(new Vector2d(-35, 46), Math.toRadians(270))
+                .splineTo(new Vector2d(0, 35), Math.toRadians(0))
+                .splineTo(new Vector2d(40, 35), Math.toRadians(0))
+                .build();
+        TrajectorySequence postboardBlueNonBackstage = drive.trajectorySequenceBuilder(new Pose2d(40, 35, Math.toRadians(0)))
+                .splineToConstantHeading(new Vector2d(45, 59), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(60, 60), Math.toRadians(0))
+                .build();
+
+        TrajectorySequence preboardRedBackstage = drive.trajectorySequenceBuilder(new Pose2d(12, -60, Math.toRadians(90)))
+                .splineTo(new Vector2d(12, -46), Math.toRadians(90))
+                .splineTo(new Vector2d(18, -35), Math.toRadians(0))
+                .splineTo(new Vector2d(40, -35), Math.toRadians(0))
+                .build();
+        TrajectorySequence postboardRedBackstage = drive.trajectorySequenceBuilder(new Pose2d(40, -35, Math.toRadians(0)))
+                .splineToConstantHeading(new Vector2d(45, -59), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(60, -60), Math.toRadians(0))
+                .build();
+
+        TrajectorySequence preboardRedNonBackstage = drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))
+                .splineTo(new Vector2d(-35, 46), Math.toRadians(270))
+                .splineTo(new Vector2d(0, 35), Math.toRadians(0))
+                .splineTo(new Vector2d(40, 35), Math.toRadians(0))
+                .build();
+        TrajectorySequence postboardRedNonBackstage = drive.trajectorySequenceBuilder(new Pose2d(40, 35, Math.toRadians(0)))
+                .splineToConstantHeading(new Vector2d(45, 59), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(60, 60), Math.toRadians(0))
                 .build();
 
         telemetry.addData("Status", "Initialized");
@@ -88,10 +118,19 @@ public class Autonomous701 extends LinearOpMode{
 
         telemetry.addData("Status", "Starting");
 
+        //blue backstage
         drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
-        drive.followTrajectorySequence(preboard);
+        //blue non-backstage
+        drive.setPoseEstimate(new Pose2d(-35, 60, Math.toRadians(270)));
+        // red backstage
+        drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
+        //red non-backstage
+        drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
+
+
+        drive.followTrajectorySequence(preboardBlueNonBackstage);
         sleep(1000);
-        drive.followTrajectorySequence(postboard);
+        drive.followTrajectorySequence(postboardBlueNonBackstage);
 
         telemetry.addData("Status", "Complete");
     }
