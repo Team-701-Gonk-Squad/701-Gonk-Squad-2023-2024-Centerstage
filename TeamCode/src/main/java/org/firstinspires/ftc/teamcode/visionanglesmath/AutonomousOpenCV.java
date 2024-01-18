@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.visionanglesmath;
 
+import static android.os.SystemClock.sleep;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -19,25 +21,33 @@ import org.openftc.easyopencv.OpenCvWebcam;
 public class AutonomousOpenCV extends OpMode {
 
     OpenCvWebcam webcam1 = null;
+    String position = "none";
 
     @Override
     public void init() {
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam1 = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id",
+                hardwareMap.appContext.getPackageName());
+        webcam1 = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"),
+                cameraMonitorViewId);
 
         webcam1.setPipeline(new examplePipeline());
 
         webcam1.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             public void onOpened() {
                 webcam1.startStreaming(640, 360, OpenCvCameraRotation.UPRIGHT);
-            } public void onError(int errorCode) {}
+            }
+
+            public void onError(int errorCode) {
+            }
         });
     }
 
     @Override
     public void loop() {
-
+        telemetry.addData("spike", position);
+        sleep(100);
+        telemetry.update();
     }
 
     class examplePipeline extends OpenCvPipeline {
@@ -50,12 +60,13 @@ public class AutonomousOpenCV extends OpMode {
         double rightavgfin;
         Mat outPut = new Mat();
         Scalar rectColor = new Scalar(255.0, 0.0, 0.0);
+
         public Mat processFrame(Mat input) {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
             telemetry.addLine("pipeline running :)");
 
-            Rect centerRect = new Rect(240,90,100,90);
-            Rect leftRect = new Rect(1,80,80,100);
+            Rect centerRect = new Rect(240, 90, 100, 90);
+            Rect leftRect = new Rect(1, 80, 80, 100);
             Rect rightRect = new Rect(540, 90, 99, 100);
 
             input.copyTo(outPut);
@@ -81,15 +92,18 @@ public class AutonomousOpenCV extends OpMode {
 
             if (leftavgfin > rightavgfin && leftavgfin > centeravgfin) {
                 telemetry.addLine("Left");
+                position = "left";
             }
             if (rightavgfin > centeravgfin && rightavgfin > leftavgfin) {
                 telemetry.addLine("Right");
+                position = "right";
             }
-            if (centeravgfin > rightavgfin && centeravgfin > leftavgfin){
+            if (centeravgfin > rightavgfin && centeravgfin > leftavgfin) {
                 telemetry.addLine("Center :)");
+                position = "center";
             }
 
-            return(outPut);
+            return (outPut);
         }
     }
 }

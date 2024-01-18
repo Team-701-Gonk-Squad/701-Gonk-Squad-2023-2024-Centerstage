@@ -79,12 +79,12 @@ public class Hardware {
 //        distance = hardwareMap.get(DistanceSensor.class, "distance");
 
         bottomSlot = hardwareMap.get(RevColorSensorV3.class, "I2C3");
-        distance = hardwareMap.get(Rev2mDistanceSensor.class, "I2C1");
+//        distance = hardwareMap.get(Rev2mDistanceSensor.class, "I2C1");
         topSlot = hardwareMap.get(RevColorSensorV3.class, "I2C2");
     }
 
     public Boolean pixelCheck() {
-        if (topSlot.getDistance(DistanceUnit.MM) < 30 && bottomSlot.getDistance(DistanceUnit.MM) < 30) {
+        if (topSlot.getDistance(DistanceUnit.CM) < 2 && bottomSlot.getDistance(DistanceUnit.CM) < 2) {
             return true;
         }
         else {
