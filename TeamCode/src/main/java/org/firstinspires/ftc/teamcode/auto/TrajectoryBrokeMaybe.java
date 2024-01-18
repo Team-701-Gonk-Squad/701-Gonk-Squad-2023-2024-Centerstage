@@ -28,8 +28,7 @@ public class TrajectoryBrokeMaybe extends LinearOpMode {
     private CRServo action3;
     private CRServo action4;
     private static double DISTANCE;
-    Pose2d startPose = new Pose2d(-35, -
-            60, Math.toRadians(90));
+    Pose2d startPose = new Pose2d(-35, -60, Math.toRadians(90));
 
 
     @Override
@@ -74,8 +73,8 @@ public class TrajectoryBrokeMaybe extends LinearOpMode {
                 .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
                 .splineTo(new Vector2d(0, -35), Math.toRadians(0))
                 .splineTo(new Vector2d(40, -35), Math.toRadians(0))
-                .splineTo(new Vector2d(45, -54), Math.toRadians(270))
-                .splineTo(new Vector2d(60, -55), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(45, -54), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(60, -55), Math.toRadians(0))
                 .build();
 
 //                .splineTo(new Vector2d(10,24),90)
