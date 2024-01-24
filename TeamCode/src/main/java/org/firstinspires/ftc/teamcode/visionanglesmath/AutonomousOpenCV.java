@@ -2,10 +2,15 @@ package org.firstinspires.ftc.teamcode.visionanglesmath;
 
 import static android.os.SystemClock.sleep;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.Hardware;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -22,6 +27,7 @@ public class AutonomousOpenCV extends OpMode {
 
     OpenCvWebcam webcam1 = null;
     String position = "none";
+    String startposition = "none";
 
     @Override
     public void init() {
@@ -45,9 +51,79 @@ public class AutonomousOpenCV extends OpMode {
 
     @Override
     public void loop() {
-        telemetry.addData("spike", position);
-        sleep(100);
-        telemetry.update();
+        Hardware hardware = new Hardware(hardwareMap);
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        TrajectorySequence start_centerstriprelease = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
+                .lineToSplineHeading(new Pose2d(16, 33.5, Math.toRadians(270)))
+                .build();
+        TrajectorySequence centerstriprelease_centerboard = drive.trajectorySequenceBuilder(start_centerstriprelease.end())
+                .lineToSplineHeading(new Pose2d(43, 33, Math.toRadians(180)))
+                .build();
+
+        TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
+                .lineToSplineHeading(new Pose2d(36, 31, Math.toRadians(180)))
+                .build();
+        TrajectorySequence leftstriprelease_leftboard = drive.trajectorySequenceBuilder(start_leftstriprelease.end())
+                .lineToSplineHeading(new Pose2d(43, 40, Math.toRadians(180)))
+                .build();
+
+        TrajectorySequence start_rightstriprelease = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
+                .lineToSplineHeading(new Pose2d(11, 32, Math.toRadians(180)))
+                .build();
+        TrajectorySequence rightstriprelease_rightboard = drive.trajectorySequenceBuilder(start_rightstriprelease.end())
+                .lineToSplineHeading(new Pose2d(43, 27, Math.toRadians(180)))
+                .build();
+        if (position == "center") {
+            drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
+            drive.followTrajectorySequence(start_centerstriprelease);
+            hardware.intake.setPower(.5);
+            sleep(3000);
+            hardware.intake.setPower(0);
+            drive.followTrajectorySequence(centerstriprelease_centerboard);
+            hardware.leftSlide.setPower(0.75);
+            hardware.rightSlide.setPower(0.75);
+            sleep(200);
+            hardware.boxRotation.setPosition(0);
+            sleep(1000);
+            hardware.leftSlide.setPower(0);
+            hardware.rightSlide.setPower(0);
+            hardware.door.setPosition(0);
+            sleep(5000);
+        } else if (position == "left") {
+            drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
+            drive.followTrajectorySequence(start_leftstriprelease);
+            hardware.intake.setPower(.5);
+            sleep(3000);
+            hardware.intake.setPower(0);
+            drive.followTrajectorySequence(leftstriprelease_leftboard);
+            hardware.leftSlide.setPower(0.75);
+            hardware.rightSlide.setPower(0.75);
+            sleep(200);
+            hardware.boxRotation.setPosition(0);
+            sleep(1000);
+            hardware.leftSlide.setPower(0);
+            hardware.rightSlide.setPower(0);
+            hardware.door.setPosition(0);
+            sleep(5000);
+        } else if (position == "right") {
+            drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
+            drive.followTrajectorySequence(start_rightstriprelease);
+            hardware.intake.setPower(.5);
+            sleep(3000);
+            hardware.intake.setPower(0);
+            drive.followTrajectorySequence(rightstriprelease_rightboard);
+            hardware.leftSlide.setPower(0.75);
+            hardware.rightSlide.setPower(0.75);
+            sleep(200);
+            hardware.boxRotation.setPosition(0);
+            sleep(500);
+            hardware.leftSlide.setPower(0);
+            hardware.rightSlide.setPower(0);
+            sleep(500);
+            hardware.door.setPosition(0);
+            sleep(5000);
+        }
+        requestOpModeStop();
     }
 
     class examplePipeline extends OpenCvPipeline {

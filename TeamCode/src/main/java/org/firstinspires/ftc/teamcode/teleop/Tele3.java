@@ -98,6 +98,10 @@ public class Tele3 extends LinearOpMode {
                 hardware.door.setPosition(0);
             }
 
+            if (gamepad1.b) {
+                hardware.intake.setPower(-0.2);
+            }
+
             //set powers to pull up hooks
             hardware.verticalActuator.setPower(-(gamepad2.left_stick_y) * 5);
 

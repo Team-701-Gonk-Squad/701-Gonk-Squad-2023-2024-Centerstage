@@ -119,18 +119,18 @@ public class Autonomous701 extends LinearOpMode{
         telemetry.addData("Status", "Starting");
 
         //blue backstage
-        drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
+//        drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
         //blue non-backstage
-        drive.setPoseEstimate(new Pose2d(-35, 60, Math.toRadians(270)));
+//        drive.setPoseEstimate(new Pose2d(-35, 60, Math.toRadians(270)));
         // red backstage
-        drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
+//        drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
         //red non-backstage
         drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
 
-        drive.followTrajectorySequence(preboardBlueNonBackstage);
+        drive.followTrajectorySequence(preboardRedNonBackstage);
         sleep(1000);
-        drive.followTrajectorySequence(postboardBlueNonBackstage);
+        drive.followTrajectorySequence(postboardRedNonBackstage);
 
         telemetry.addData("Status", "Complete");
     }
