@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.visionanglesmath;
 import static android.os.SystemClock.sleep;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -22,8 +21,14 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
+
+
+// BATTERY AT MAX VOLTAGE
+
+
+
 @Autonomous
-public class AutonomousOpenCV extends OpMode {
+public class BlueOnstage extends OpMode {
 
     OpenCvWebcam webcam1 = null;
     String position = "none";
@@ -54,17 +59,33 @@ public class AutonomousOpenCV extends OpMode {
         Hardware hardware = new Hardware(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         TrajectorySequence start_centerstriprelease = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
-                .lineToSplineHeading(new Pose2d(16, 33.5, Math.toRadians(270)))
+                .lineToSplineHeading(new Pose2d(-36, 33.5, Math.toRadians(270)))
                 .build();
         TrajectorySequence centerstriprelease_centerboard = drive.trajectorySequenceBuilder(start_centerstriprelease.end())
-                .lineToSplineHeading(new Pose2d(43, 33, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(-58, 33, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(-58, 12, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(40, 12, Math.toRadians(180)))
                 .build();
+//        TrajectorySequence postcenterboard_backup = drive.trajectorySequenceBuilder(centerstriprelease_centerboard.end())
+//                .lineToSplineHeading(new Pose2d(30, 27, Math.toRadians(180)))
+//                .build();
+//        TrajectorySequence postcenterboard_park = drive.trajectorySequenceBuilder(postcenterboard_backup.end())
+//                .lineToSplineHeading(new Pose2d(40, 59.5, Math.toRadians(180)))
+//                .lineToSplineHeading(new Pose2d(57.5, 59.5, Math.toRadians(180)))
+//                .build();
 
         TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
-                .lineToSplineHeading(new Pose2d(36, 31, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(34.5, 31, Math.toRadians(180)))
                 .build();
         TrajectorySequence leftstriprelease_leftboard = drive.trajectorySequenceBuilder(start_leftstriprelease.end())
                 .lineToSplineHeading(new Pose2d(43, 40, Math.toRadians(180)))
+                .build();
+        TrajectorySequence postleftboard_backup = drive.trajectorySequenceBuilder(leftstriprelease_leftboard.end())
+                .lineToSplineHeading(new Pose2d(41, 27, Math.toRadians(180)))
+                .build();
+        TrajectorySequence postleftboard_park = drive.trajectorySequenceBuilder(postleftboard_backup.end())
+                .lineToSplineHeading(new Pose2d(40, 59.5, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(57.5, 59.5, Math.toRadians(180)))
                 .build();
 
         TrajectorySequence start_rightstriprelease = drive.trajectorySequenceBuilder(new Pose2d(12, 60, Math.toRadians(270)))
@@ -73,10 +94,18 @@ public class AutonomousOpenCV extends OpMode {
         TrajectorySequence rightstriprelease_rightboard = drive.trajectorySequenceBuilder(start_rightstriprelease.end())
                 .lineToSplineHeading(new Pose2d(43, 27, Math.toRadians(180)))
                 .build();
+        TrajectorySequence postrightboard_backup = drive.trajectorySequenceBuilder(rightstriprelease_rightboard.end())
+                .lineToSplineHeading(new Pose2d(30, 27, Math.toRadians(180)))
+                .build();
+        TrajectorySequence postrightboard_park = drive.trajectorySequenceBuilder(postrightboard_backup.end())
+                .lineToSplineHeading(new Pose2d(40, 59.5, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(57.5, 59.5, Math.toRadians(180)))
+                .build();
+
         if (position == "center") {
             drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
             drive.followTrajectorySequence(start_centerstriprelease);
-            hardware.intake.setPower(.5);
+            hardware.intake.setPower(.60);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(centerstriprelease_centerboard);
@@ -84,15 +113,22 @@ public class AutonomousOpenCV extends OpMode {
             hardware.rightSlide.setPower(0.75);
             sleep(200);
             hardware.boxRotation.setPosition(0);
-            sleep(1000);
+            sleep(500);
             hardware.leftSlide.setPower(0);
             hardware.rightSlide.setPower(0);
+            sleep(500);
             hardware.door.setPosition(0);
-            sleep(5000);
+            sleep(2000);
+//            drive.followTrajectorySequence(postcenterboard_backup);
+//            hardware.boxRotation.setPosition(1);
+//            sleep(1000);
+//            hardware.leftSlide.setPower(-0.25);
+//            hardware.rightSlide.setPower(-0.25);
+//            drive.followTrajectorySequence(postcenterboard_park);
         } else if (position == "left") {
             drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
             drive.followTrajectorySequence(start_leftstriprelease);
-            hardware.intake.setPower(.5);
+            hardware.intake.setPower(.60);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(leftstriprelease_leftboard);
@@ -100,15 +136,22 @@ public class AutonomousOpenCV extends OpMode {
             hardware.rightSlide.setPower(0.75);
             sleep(200);
             hardware.boxRotation.setPosition(0);
-            sleep(1000);
+            sleep(500);
             hardware.leftSlide.setPower(0);
             hardware.rightSlide.setPower(0);
+            sleep(500);
             hardware.door.setPosition(0);
-            sleep(5000);
+            sleep(2000);
+            drive.followTrajectorySequence(postleftboard_backup);
+            hardware.boxRotation.setPosition(1);
+            sleep(1000);
+            hardware.leftSlide.setPower(-0.25);
+            hardware.rightSlide.setPower(-0.25);
+            drive.followTrajectorySequence(postleftboard_park);
         } else if (position == "right") {
             drive.setPoseEstimate(new Pose2d(12, 60, Math.toRadians(270)));
             drive.followTrajectorySequence(start_rightstriprelease);
-            hardware.intake.setPower(.5);
+            hardware.intake.setPower(.60);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(rightstriprelease_rightboard);
@@ -121,7 +164,13 @@ public class AutonomousOpenCV extends OpMode {
             hardware.rightSlide.setPower(0);
             sleep(500);
             hardware.door.setPosition(0);
-            sleep(5000);
+            sleep(2000);
+            drive.followTrajectorySequence(postrightboard_backup);
+            hardware.boxRotation.setPosition(1);
+            sleep(1000);
+            hardware.leftSlide.setPower(-0.25);
+            hardware.rightSlide.setPower(-0.25);
+            drive.followTrajectorySequence(postrightboard_park);
         }
         requestOpModeStop();
     }
