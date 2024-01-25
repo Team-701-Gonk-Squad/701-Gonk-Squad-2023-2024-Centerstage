@@ -74,7 +74,7 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
         Ploop looper = new Ploop(hardwareMap);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "rear webcam"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeling(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);
@@ -83,7 +83,7 @@ public class CorrectiveAprilTagAnglePIDAuto extends LinearOpMode
             @Override
             public void onOpened()
             {
-                camera.startStreaming(800,448, OpenCvCameraRotation.UPSIDE_DOWN);
+                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override

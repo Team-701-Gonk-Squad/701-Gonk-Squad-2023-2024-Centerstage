@@ -19,8 +19,8 @@ public class Ploop {
         double BackLeftPower = 0;
         double BackRightPower = 0;
 
-        double spinPower = 0.02*yaw;
-        double strafePower = -0.7*x;
+        double spinPower = -0.02*yaw;
+        double strafePower = 0.7*x;
         double straightPower = 0.5*(z-2);
 
         if (yaw < -1 || yaw > 1) { // spin
