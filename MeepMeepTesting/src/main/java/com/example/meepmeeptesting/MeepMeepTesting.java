@@ -6,13 +6,15 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstra
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
-        
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.attribute.PosixFileAttributes;
 
 import javax.imageio.ImageIO;
+
+import kotlin.time.MeasureTimeKt;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
@@ -22,7 +24,7 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(63, 14.5, Math.toRadians(180)))  // start coordinates: (-35, +-60)   (12, +-60)  |  angles:90 or 270
+                        drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(270)))  // start coordinates: (-35, +-60)   (12, +-60)  |  angles:90 or 270
                                 //TODO: Base method with just splineTo
 //                                .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
 //                                .splineTo(new Vector2d(0, -35), Math.toRadians(0))
@@ -66,11 +68,19 @@ public class MeepMeepTesting {
 
 
 
-                                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
-                                .lineToConstantHeading(new Vector2d(50, 12))
-                                .splineToConstantHeading(new Vector2d(44, 36), Math.toRadians(0))
-                                .resetVelConstraint()
+//                                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
+//                                .lineToConstantHeading(new Vector2d(50, 12))
+//                                .splineToConstantHeading(new Vector2d(44, 36), Math.toRadians(0))
+//                                .resetVelConstraint()
 
+                                .lineToSplineHeading(new Pose2d(-36, 33.5, Math.toRadians(0)))
+                                .setVelConstraint(new MecanumVelocityConstraint(28, 19.5))
+                                .lineToSplineHeading(new Pose2d(-44, 33.5, Math.toRadians(0)))
+                                .lineToSplineHeading(new Pose2d(-35, 7, Math.toRadians(0)))
+                                .resetVelConstraint()
+                                .lineToSplineHeading(new Pose2d(62, 9, Math.toRadians(180)))
+                                .lineToConstantHeading(new Vector2d(55, 20))
+                                .lineToConstantHeading(new Vector2d(70, 22))
 
 
 

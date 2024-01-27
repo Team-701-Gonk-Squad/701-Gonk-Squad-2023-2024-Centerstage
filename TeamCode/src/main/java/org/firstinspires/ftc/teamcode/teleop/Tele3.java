@@ -99,7 +99,7 @@ public class Tele3 extends LinearOpMode {
             }
 
             if (gamepad1.b) {
-                hardware.intake.setPower(-0.2);
+                hardware.intake.setPower(-1);
             }
 
             //set powers to pull up hooks

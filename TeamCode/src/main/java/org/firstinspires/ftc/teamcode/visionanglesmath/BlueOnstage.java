@@ -92,18 +92,17 @@ public class BlueOnstage extends OpMode {
 
 
         TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(270)))
-                .lineToSplineHeading(new Pose2d(-36, 33.5, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(-36, 33, Math.toRadians(0)))
                 .build();
         TrajectorySequence leftstriprelease_pos2 = drive.trajectorySequenceBuilder(start_leftstriprelease.end())
 //                 TODO: Add beginning of path to get around trusses
-                .lineToSplineHeading(new Pose2d(-40, 40, Math.toRadians(270)))
-                .splineToConstantHeading(new Vector2d(-55, 35), Math.toRadians(270))
-                .splineTo(new Vector2d(-45, 7), Math.toRadians(0))
-                .setVelConstraint(new MecanumVelocityConstraint(27, 19.2))
+                .setVelConstraint(new MecanumVelocityConstraint(28, 19.5))
+                .lineToSplineHeading(new Pose2d(-44, 33.5, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(-35, 7, Math.toRadians(0)))
                 .resetVelConstraint()
-                .lineToSplineHeading(new Pose2d(62, 7, Math.toRadians(180)))
-                .lineToConstantHeading(new Vector2d(62, 15))
-                .lineToConstantHeading(new Vector2d(65, 15))
+                .lineToSplineHeading(new Pose2d(62, 13, Math.toRadians(180)))
+//                .lineToConstantHeading(new Vector2d(55, 20))
+//                .lineToConstantHeading(new Vector2d(70, 22))
                 .build();
         TrajectorySequence pos2left_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, 14.5, Math.toRadians(180)))
                 .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
@@ -112,7 +111,7 @@ public class BlueOnstage extends OpMode {
                 .resetVelConstraint()
                 .build();
         TrajectorySequence postleftboard_backup = drive.trajectorySequenceBuilder(pos2left_boardlineup.end())
-                .lineToSplineHeading(new Pose2d(30, 27, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(40, 27, Math.toRadians(180)))
                 .build();
         TrajectorySequence postleftboard_repark = drive.trajectorySequenceBuilder(postleftboard_backup.end())
                 .lineToSplineHeading(new Pose2d(44, 27, Math.toRadians(180)))
@@ -179,6 +178,46 @@ public class BlueOnstage extends OpMode {
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(leftstriprelease_pos2); // TODO: Write this trajectory
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
             drive.setPoseEstimate(new Pose2d(63, 14.5, Math.toRadians(180)));
             drive.followTrajectorySequence(pos2left_boardlineup);
             hardware.leftSlide.setPower(0.57);
