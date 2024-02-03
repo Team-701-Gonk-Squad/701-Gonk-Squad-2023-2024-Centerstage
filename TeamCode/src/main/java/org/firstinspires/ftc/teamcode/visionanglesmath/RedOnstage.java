@@ -90,33 +90,6 @@ public class RedOnstage extends OpMode {
                 .build();
 
 
-
-        TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(270)))
-                .lineToSplineHeading(new Pose2d(-36, 33, Math.toRadians(0)))
-                .build();
-        TrajectorySequence leftstriprelease_pos2 = drive.trajectorySequenceBuilder(start_leftstriprelease.end())
-//                 TODO: Add beginning of path to get around trusses
-                .setVelConstraint(new MecanumVelocityConstraint(28, 19.5))
-                .lineToSplineHeading(new Pose2d(-44, 33.5, Math.toRadians(0)))
-                .lineToSplineHeading(new Pose2d(-35, 7, Math.toRadians(0)))
-                .resetVelConstraint()
-                .lineToSplineHeading(new Pose2d(62, 13, Math.toRadians(180)))
-//                .lineToConstantHeading(new Vector2d(55, 20))
-//                .lineToConstantHeading(new Vector2d(70, 22))
-                .build();
-        TrajectorySequence pos2left_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, 14.5, Math.toRadians(180)))
-                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
-                .lineToConstantHeading(new Vector2d(50, 12))
-                .splineToConstantHeading(new Vector2d(44, 43), Math.toRadians(0))
-                .resetVelConstraint()
-                .build();
-        TrajectorySequence postleftboard_backup = drive.trajectorySequenceBuilder(pos2left_boardlineup.end())
-                .lineToSplineHeading(new Pose2d(40, 27, Math.toRadians(180)))
-                .build();
-        TrajectorySequence postleftboard_repark = drive.trajectorySequenceBuilder(postleftboard_backup.end())
-                .lineToSplineHeading(new Pose2d(44, 27, Math.toRadians(180)))
-                .build();
-
 //        TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(90)))
 //                .lineToSplineHeading(new Pose2d(-36, 33.5, Math.toRadians(270)))
 //                .lineToSplineHeading(new Pose2d(-58, 33, Math.toRadians(180)))
@@ -145,6 +118,31 @@ public class RedOnstage extends OpMode {
 //        TrajectorySequence postrightboard_backup = drive.trajectorySequenceBuilder(rightstriprelease_rightboard.end())
 //                .lineToSplineHeading(new Pose2d(30, 27, Math.toRadians(180)))
 //                .build();
+        TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
+                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
+                .lineToSplineHeading(new Pose2d(-35, -33.5, Math.toRadians(180)))
+                .build();
+        TrajectorySequence leftstriprelease_pos2 = drive.trajectorySequenceBuilder(start_rightstriprelease.end())
+//                 TODO: Add beginning of path to get around trusses
+                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
+                .lineToSplineHeading(new Pose2d(-35, -7, Math.toRadians(0)))
+                .resetVelConstraint()
+                .lineToSplineHeading(new Pose2d(54, -7, Math.toRadians(180)))
+                .lineToConstantHeading(new Vector2d(65, -20))
+                .build();
+        TrajectorySequence pos2left_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, -14.5, Math.toRadians(180)))
+                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
+                .lineToConstantHeading(new Vector2d(50, -12))
+                .splineToConstantHeading(new Vector2d(45, -28), Math.toRadians(0))
+                .resetVelConstraint()
+                .build();
+        TrajectorySequence postleftboard_backup = drive.trajectorySequenceBuilder(pos2_boardlineup.end())
+                .lineToSplineHeading(new Pose2d(36, -27, Math.toRadians(180)))
+                .build();
+        TrajectorySequence postleftboard_repark = drive.trajectorySequenceBuilder(postcenterboard_backup.end())
+                .setVelConstraint(new MecanumVelocityConstraint(30, -19.5))
+                .lineToSplineHeading(new Pose2d(44, -27, Math.toRadians(180)))
+                .build();
 
         if (position == "center") {
             drive.setPoseEstimate(new Pose2d(-36, -60, Math.toRadians(90))); // TODO: Set correct start
@@ -204,7 +202,7 @@ public class RedOnstage extends OpMode {
             hardware.rightSlide.setPower(-0.25);
             drive.followTrajectorySequence(postcenterboard_repark);
         } else if (position == "left") {
-            drive.setPoseEstimate(new Pose2d(-36, 60, Math.toRadians(270))); // TODO: Set correct start
+            drive.setPoseEstimate(new Pose2d(-36, -60, Math.toRadians(90))); // TODO: Set correct start
             drive.followTrajectorySequence(start_leftstriprelease); // TODO: Write this trajectory
             hardware.intake.setPower(0.85);
             sleep(3000);
@@ -240,7 +238,7 @@ public class RedOnstage extends OpMode {
             hardware.leftFront.setPower(-0.3);
             hardware.rightRear.setPower(-0.3);
             sleep(350);
-            drive.setPoseEstimate(new Pose2d(63, 14.5, Math.toRadians(180)));
+            drive.setPoseEstimate(new Pose2d(63, -14.5, Math.toRadians(180)));
             drive.followTrajectorySequence(pos2left_boardlineup);
             hardware.leftSlide.setPower(0.57);
             hardware.rightSlide.setPower(0.57);

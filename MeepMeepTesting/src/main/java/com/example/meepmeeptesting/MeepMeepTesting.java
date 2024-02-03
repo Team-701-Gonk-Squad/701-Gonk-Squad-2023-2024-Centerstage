@@ -24,7 +24,7 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(63, 14.5, Math.toRadians(180)))  // start coordinates: (-35, +-60)   (12, +-60)  |  angles:90 or 270
+                        drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))  // start coordinates: (-35, +-60)   (12, +-60)  |  angles:90 or 270
                                 //TODO: Base method with just splineTo
 //                                .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
 //                                .splineTo(new Vector2d(0, -35), Math.toRadians(0))
@@ -63,6 +63,20 @@ public class MeepMeepTesting {
 //                                .splineToConstantHeading(new Vector2d(60, -60), Math.toRadians(0))
 //                                .build()
 
+                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
+                                .lineToSplineHeading(new Pose2d(-35, -33.5, Math.toRadians(180)))
+                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
+                                .lineToSplineHeading(new Pose2d(-35, -7, Math.toRadians(0)))
+                                .resetVelConstraint()
+                                .lineToSplineHeading(new Pose2d(54, -7, Math.toRadians(180)))
+                                .lineToConstantHeading(new Vector2d(65, -20))
+                                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
+                                .lineToConstantHeading(new Vector2d(50, -12))
+                                .splineToConstantHeading(new Vector2d(45, -28), Math.toRadians(0))
+                                .resetVelConstraint()
+                                .lineToSplineHeading(new Pose2d(36, -27, Math.toRadians(180)))
+                                .setVelConstraint(new MecanumVelocityConstraint(30, -19.5))
+                                .lineToSplineHeading(new Pose2d(44, -27, Math.toRadians(180)))
 
 
 
@@ -74,15 +88,15 @@ public class MeepMeepTesting {
 //                                .resetVelConstraint()
 
 
-                                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
-                                .lineToConstantHeading(new Vector2d(50, 12))
-                                .splineToConstantHeading(new Vector2d(45, 28), Math.toRadians(0))
-                                .resetVelConstraint()
-
-                                .lineToSplineHeading(new Pose2d(36, 27, Math.toRadians(180)))
-
-                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                                .lineToSplineHeading(new Pose2d(44, 27, Math.toRadians(180)))
+//                                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
+//                                .lineToConstantHeading(new Vector2d(50, 12))
+//                                .splineToConstantHeading(new Vector2d(45, 28), Math.toRadians(0))
+//                                .resetVelConstraint()
+//
+//                                .lineToSplineHeading(new Pose2d(36, 27, Math.toRadians(180)))
+//
+//                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
+//                                .lineToSplineHeading(new Pose2d(44, 27, Math.toRadians(180)))
 
 
 
