@@ -160,13 +160,53 @@ public class BlueOnstage extends OpMode {
 
         if (position == "center") {
             drive.setPoseEstimate(new Pose2d(-36, 60, Math.toRadians(270))); // TODO: Set correct start
-            drive.followTrajectorySequence(start_centerstriprelease); // TODO: Write this trajectory
-            hardware.intake.setPower(0.75);
+            drive.followTrajectorySequence(start_rightstriprelease); // TODO: Write this trajectory
+            hardware.intake.setPower(0.85);
             sleep(3000);
             hardware.intake.setPower(0);
-            drive.followTrajectorySequence(centerstriprelease_pos2); // TODO: Write this trajectory
+            drive.followTrajectorySequence(rightstriprelease_pos2); // TODO: Write this trajectory
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
             drive.setPoseEstimate(new Pose2d(63, 14.5, Math.toRadians(180)));
-            drive.followTrajectorySequence(pos2_boardlineup);
+            drive.followTrajectorySequence(pos2right_boardlineup);
             hardware.leftSlide.setPower(0.57);
             hardware.rightSlide.setPower(0.57);
             sleep(200);
@@ -177,12 +217,12 @@ public class BlueOnstage extends OpMode {
             sleep(1200);
             hardware.door.setPosition(0);
             sleep(1000);
-            drive.followTrajectorySequence(postcenterboard_backup);
+            drive.followTrajectorySequence(postrightboard_backup);
             hardware.boxRotation.setPosition(1);
             sleep(1000);
             hardware.leftSlide.setPower(-0.25);
             hardware.rightSlide.setPower(-0.25);
-            drive.followTrajectorySequence(postcenterboard_repark);
+            drive.followTrajectorySequence(postrightboard_repark);
         } else if (position == "left") {
             drive.setPoseEstimate(new Pose2d(-36, 60, Math.toRadians(270))); // TODO: Set correct start
             drive.followTrajectorySequence(start_leftstriprelease); // TODO: Write this trajectory
@@ -251,10 +291,50 @@ public class BlueOnstage extends OpMode {
         } else if (position == "right") {
             drive.setPoseEstimate(new Pose2d(-36, 60, Math.toRadians(270))); // TODO: Set correct start
             drive.followTrajectorySequence(start_rightstriprelease); // TODO: Write this trajectory
-            hardware.intake.setPower(0.75);
+            hardware.intake.setPower(0.85);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(rightstriprelease_pos2); // TODO: Write this trajectory
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(0.3);
+            hardware.rightRear.setPower(0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
             drive.setPoseEstimate(new Pose2d(63, 14.5, Math.toRadians(180)));
             drive.followTrajectorySequence(pos2right_boardlineup);
             hardware.leftSlide.setPower(0.57);
