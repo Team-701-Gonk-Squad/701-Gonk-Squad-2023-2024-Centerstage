@@ -30,7 +30,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
-public class BlueOnstage extends OpMode {
+public class RedOnstage extends OpMode {
 
     OpenCvWebcam webcam1 = null;
     String position = "none";
@@ -60,33 +60,33 @@ public class BlueOnstage extends OpMode {
     public void loop() {
         Hardware hardware = new Hardware(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        TrajectorySequence start_centerstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(270)))
+        TrajectorySequence start_centerstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
                 .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                .lineToSplineHeading(new Pose2d(-33, 33.5, Math.toRadians(270)))
+                .lineToSplineHeading(new Pose2d(-33, -33.5, Math.toRadians(90)))
                 .build();
         TrajectorySequence centerstriprelease_pos2 = drive.trajectorySequenceBuilder(start_centerstriprelease.end())
 //                 TODO: Add beginning of path to get around trusses
                 .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                .lineToSplineHeading(new Pose2d(-40, 40, Math.toRadians(270)))
-                .splineToConstantHeading(new Vector2d(-55, 35), Math.toRadians(270))
-                .splineTo(new Vector2d(-45, 7), Math.toRadians(0))
+                .lineToSplineHeading(new Pose2d(-40, -40, Math.toRadians(90)))
+                .splineToConstantHeading(new Vector2d(-55, -35), Math.toRadians(90))
+                .splineTo(new Vector2d(-45, -7), Math.toRadians(0))
                 .setVelConstraint(new MecanumVelocityConstraint(27, 19.2))
                 .resetVelConstraint()
-                .lineToSplineHeading(new Pose2d(54, 7, Math.toRadians(180)))
-                .lineToConstantHeading(new Vector2d(65, 20))
+                .lineToSplineHeading(new Pose2d(54, -7, Math.toRadians(180)))
+                .lineToConstantHeading(new Vector2d(65, -20))
                 .build();
-        TrajectorySequence pos2_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, 14.5, Math.toRadians(180)))
+        TrajectorySequence pos2_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, -14.5, Math.toRadians(180)))
                 .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
-                .lineToConstantHeading(new Vector2d(50, 12))
-                .splineToConstantHeading(new Vector2d(45, 36), Math.toRadians(0))
+                .lineToConstantHeading(new Vector2d(50, -12))
+                .splineToConstantHeading(new Vector2d(45, -36), Math.toRadians(0))
                 .resetVelConstraint()
                 .build();
         TrajectorySequence postcenterboard_backup = drive.trajectorySequenceBuilder(pos2_boardlineup.end())
-                .lineToSplineHeading(new Pose2d(30, 27, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(30, -27, Math.toRadians(180)))
                 .build();
         TrajectorySequence postcenterboard_repark = drive.trajectorySequenceBuilder(postcenterboard_backup.end())
                 .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                .lineToSplineHeading(new Pose2d(44, 27, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(44, -27, Math.toRadians(180)))
                 .build();
 
 
@@ -124,7 +124,7 @@ public class BlueOnstage extends OpMode {
 //                .lineToSplineHeading(new Pose2d(40, 12, Math.toRadians(180)))
 //                .build();
 //        TrajectorySequence leftstriprelease_leftboard = drive.trajectorySequenceBuilder()
-                // TODO: Add beginning of path to get around trusses
+        // TODO: Add beginning of path to get around trusses
 //                .lineToSplineHeading(new Pose2d(43, 40, Math.toRadians(180)))
 //                .build();
 //        TrajectorySequence postleftboard_backup = drive.trajectorySequenceBuilder(leftstriprelease_leftboard.end())
@@ -132,40 +132,60 @@ public class BlueOnstage extends OpMode {
 //                .build();
 
 
-        TrajectorySequence start_rightstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(270)))
-                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                .lineToSplineHeading(new Pose2d(-35, 33.5, Math.toRadians(180)))
+        TrajectorySequence start_rightstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(-36, 33.5, Math.toRadians(270)))
+                .lineToSplineHeading(new Pose2d(-58, 33, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(-58, 12, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(40, 12, Math.toRadians(180)))
                 .build();
-        TrajectorySequence rightstriprelease_pos2 = drive.trajectorySequenceBuilder(start_rightstriprelease.end())
-//                 TODO: Add beginning of path to get around trusses
-                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                .lineToSplineHeading(new Pose2d(-35, 7, Math.toRadians(0)))
-                .resetVelConstraint()
-                .lineToSplineHeading(new Pose2d(54, 7, Math.toRadians(180)))
-                .lineToConstantHeading(new Vector2d(65, 20))
-                .build();
-        TrajectorySequence pos2right_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, 14.5, Math.toRadians(180)))
-                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
-                .lineToConstantHeading(new Vector2d(50, 12))
-                .splineToConstantHeading(new Vector2d(45, 28), Math.toRadians(0))
-                .resetVelConstraint()
-                .build();
-        TrajectorySequence postrightboard_backup = drive.trajectorySequenceBuilder(pos2_boardlineup.end())
-                .lineToSplineHeading(new Pose2d(36, 27, Math.toRadians(180)))
-                .build();
-        TrajectorySequence postrightboard_repark = drive.trajectorySequenceBuilder(postcenterboard_backup.end())
-                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                .lineToSplineHeading(new Pose2d(44, 27, Math.toRadians(180)))
-                .build();
+//        TrajectorySequence rightstriprelease_rightboard = drive.trajectorySequenceBuilder(start_rightstriprelease.end())
+        // TODO: Add beginning of path to get around trusses
+//                .lineToSplineHeading(new Pose2d(43, 27, Math.toRadians(180)))
+//                .build();
+//        TrajectorySequence postrightboard_backup = drive.trajectorySequenceBuilder(rightstriprelease_rightboard.end())
+//                .lineToSplineHeading(new Pose2d(30, 27, Math.toRadians(180)))
+//                .build();
 
         if (position == "center") {
-            drive.setPoseEstimate(new Pose2d(-36, 60, Math.toRadians(270))); // TODO: Set correct start
+            drive.setPoseEstimate(new Pose2d(-36, -60, Math.toRadians(90))); // TODO: Set correct start
             drive.followTrajectorySequence(start_centerstriprelease); // TODO: Write this trajectory
             hardware.intake.setPower(0.75);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(centerstriprelease_pos2); // TODO: Write this trajectory
             drive.setPoseEstimate(new Pose2d(63, 14.5, Math.toRadians(180)));
+            drive.followTrajectorySequence(pos2_boardlineup);
+            hardware.rightFront.setPower(0.3);
+            hardware.leftRear.setPower(0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(0.3);
+            hardware.leftRear.setPower(0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(0.3);
+            hardware.leftRear.setPower(0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            hardware.rightFront.setPower(-0.3);
+            hardware.leftRear.setPower(-0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
+            sleep(350);
+            drive.setPoseEstimate(new Pose2d(63, -14.5, Math.toRadians(180)));
             drive.followTrajectorySequence(pos2_boardlineup);
             hardware.leftSlide.setPower(0.57);
             hardware.rightSlide.setPower(0.57);
@@ -190,40 +210,30 @@ public class BlueOnstage extends OpMode {
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(leftstriprelease_pos2); // TODO: Write this trajectory
-            hardware.rightFront.setPower(-0.3);
-            hardware.leftRear.setPower(-0.3);
-            hardware.leftFront.setPower(0.3);
-            hardware.rightRear.setPower(0.3);
+            hardware.rightFront.setPower(0.3);
+            hardware.leftRear.setPower(0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
             sleep(350);
             hardware.rightFront.setPower(-0.3);
             hardware.leftRear.setPower(-0.3);
             hardware.leftFront.setPower(-0.3);
             hardware.rightRear.setPower(-0.3);
             sleep(350);
-            hardware.rightFront.setPower(-0.3);
-            hardware.leftRear.setPower(-0.3);
-            hardware.leftFront.setPower(0.3);
-            hardware.rightRear.setPower(0.3);
+            hardware.rightFront.setPower(0.3);
+            hardware.leftRear.setPower(0.3);
+            hardware.leftFront.setPower(-0.3);
+            hardware.rightRear.setPower(-0.3);
             sleep(350);
             hardware.rightFront.setPower(-0.3);
             hardware.leftRear.setPower(-0.3);
             hardware.leftFront.setPower(-0.3);
             hardware.rightRear.setPower(-0.3);
             sleep(350);
-            hardware.rightFront.setPower(-0.3);
-            hardware.leftRear.setPower(-0.3);
-            hardware.leftFront.setPower(0.3);
-            hardware.rightRear.setPower(0.3);
-            sleep(350);
-            hardware.rightFront.setPower(-0.3);
-            hardware.leftRear.setPower(-0.3);
+            hardware.rightFront.setPower(0.3);
+            hardware.leftRear.setPower(0.3);
             hardware.leftFront.setPower(-0.3);
             hardware.rightRear.setPower(-0.3);
-            sleep(350);
-            hardware.rightFront.setPower(-0.3);
-            hardware.leftRear.setPower(-0.3);
-            hardware.leftFront.setPower(0.3);
-            hardware.rightRear.setPower(0.3);
             sleep(350);
             hardware.rightFront.setPower(-0.3);
             hardware.leftRear.setPower(-0.3);
@@ -251,28 +261,26 @@ public class BlueOnstage extends OpMode {
         } else if (position == "right") {
             drive.setPoseEstimate(new Pose2d(-36, 60, Math.toRadians(270))); // TODO: Set correct start
             drive.followTrajectorySequence(start_rightstriprelease); // TODO: Write this trajectory
-            hardware.intake.setPower(0.75);
+            hardware.intake.setPower(.60);
             sleep(3000);
             hardware.intake.setPower(0);
-            drive.followTrajectorySequence(rightstriprelease_pos2); // TODO: Write this trajectory
-            drive.setPoseEstimate(new Pose2d(63, 14.5, Math.toRadians(180)));
-            drive.followTrajectorySequence(pos2right_boardlineup);
-            hardware.leftSlide.setPower(0.57);
-            hardware.rightSlide.setPower(0.57);
-            sleep(200);
-            hardware.boxRotation.setPosition(0);
-            sleep(500);
-            hardware.leftSlide.setPower(0);
-            hardware.rightSlide.setPower(0);
-            sleep(1200);
-            hardware.door.setPosition(0);
-            sleep(1000);
-            drive.followTrajectorySequence(postrightboard_backup);
-            hardware.boxRotation.setPosition(1);
-            sleep(1000);
-            hardware.leftSlide.setPower(-0.25);
-            hardware.rightSlide.setPower(-0.25);
-            drive.followTrajectorySequence(postrightboard_repark);
+//            drive.followTrajectorySequence(rightstriprelease_rightboard); // TODO: Write this trajectory
+//            hardware.leftSlide.setPower(0.75);
+//            hardware.rightSlide.setPower(0.75);
+//            sleep(200);
+//            hardware.boxRotation.setPosition(0);
+//            sleep(500);
+//            hardware.leftSlide.setPower(0);
+//            hardware.rightSlide.setPower(0);
+//            sleep(500);
+//            hardware.door.setPosition(0);
+//            sleep(2000);
+//            drive.followTrajectorySequence(postrightboard_backup);
+//            hardware.boxRotation.setPosition(1);
+//            sleep(1000);
+//            hardware.leftSlide.setPower(-0.25);
+//            hardware.rightSlide.setPower(-0.25);
+//            drive.followTrajectorySequence(postrightboard_park); // TODO: Write this trajectory
         }
         requestOpModeStop();
     }
@@ -297,17 +305,26 @@ public class BlueOnstage extends OpMode {
             Rect rightRect = new Rect(540, 90, 99, 100);
 
             input.copyTo(outPut);
-            Imgproc.rectangle(outPut, leftRect, rectColor, 2);
-            Imgproc.rectangle(outPut, centerRect, rectColor, 2);
-            Imgproc.rectangle(outPut, rightRect, rectColor, 2);
+            Imgproc.rectangle(outPut, leftRect, rectColor, 1);
+            Imgproc.rectangle(outPut, centerRect, rectColor, 1);
+            Imgproc.rectangle(outPut, rightRect, rectColor, 1);
 
             leftCrop = YCbCr.submat(leftRect);
             centerCrop = YCbCr.submat(centerRect);
             rightCrop = YCbCr.submat(rightRect);
 
-            Core.extractChannel(leftCrop, leftCrop, 2);
-            Core.extractChannel(centerCrop, centerCrop, 2);
-            Core.extractChannel(rightCrop, rightCrop, 2);
+            Core.extractChannel(leftCrop, leftCrop, 1);
+            Core.extractChannel(centerCrop, centerCrop, 1);
+            Core.extractChannel(rightCrop, rightCrop, 1);
+
+            //Hi ronan I am so proud of you and your effort,
+            // good job and thank you for the great contributions
+            // to our team    :)     =D     :]
+            // here is some random stuff I decided to type:
+            // Jelly cat great googley moogley partial impact frenzy exorcism eyes heroism goggles retch remake
+            //print deer lopunny qwerty keyboard googleing sanity tripod friday penguin polarization of politics
+            // deeds of derogatory assault hereby I state there is a beep beep robot coming into yellow yellow
+            //yellow pen^2 is a very good penguin boy
 
             Scalar leftavg = Core.mean(leftCrop);
             Scalar centeravg = Core.mean(centerCrop);
