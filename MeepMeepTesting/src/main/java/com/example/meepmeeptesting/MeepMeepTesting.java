@@ -63,21 +63,16 @@ public class MeepMeepTesting {
 //                                .splineToConstantHeading(new Vector2d(60, -60), Math.toRadians(0))
 //                                .build()
 
-                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                                .lineToSplineHeading(new Pose2d(-35, -33.5, Math.toRadians(180)))
-                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                                .lineToSplineHeading(new Pose2d(-35, -7, Math.toRadians(0)))
-                                .resetVelConstraint()
+                                .setVelConstraint(new MecanumVelocityConstraint(35, 19.5))
+                                .setTurnConstraint(25, 5)
+                                .lineToSplineHeading(new Pose2d(-36, -32.5, Math.toRadians(90)))
+                                .turn(Math.toRadians(-90))
+
+                                .lineToSplineHeading(new Pose2d(-52, -36, Math.toRadians(90)))
+                                .splineToConstantHeading(new Vector2d(-36, -12), Math.toRadians(0))
+                                .turn(Math.toRadians(-90))
                                 .lineToSplineHeading(new Pose2d(54, -7, Math.toRadians(180)))
                                 .lineToConstantHeading(new Vector2d(65, -20))
-                                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
-                                .lineToConstantHeading(new Vector2d(50, -12))
-                                .splineToConstantHeading(new Vector2d(45, -28), Math.toRadians(0))
-                                .resetVelConstraint()
-                                .lineToSplineHeading(new Pose2d(36, -27, Math.toRadians(180)))
-                                .setVelConstraint(new MecanumVelocityConstraint(30, -19.5))
-                                .lineToSplineHeading(new Pose2d(44, -27, Math.toRadians(180)))
-
 
 
 

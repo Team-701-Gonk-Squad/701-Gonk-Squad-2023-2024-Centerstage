@@ -93,7 +93,7 @@ public class BlueBackstage100 extends OpMode {
                 .lineToSplineHeading(new Pose2d(43, 27, Math.toRadians(180)))
                 .build();
         TrajectorySequence postrightboard_backup = drive.trajectorySequenceBuilder(rightstriprelease_rightboard.end())
-                .lineToSplineHeading(new Pose2d(30, 27, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(38, 27, Math.toRadians(180)))
                 .build();
         TrajectorySequence postrightboard_park = drive.trajectorySequenceBuilder(postrightboard_backup.end())
                 .lineToSplineHeading(new Pose2d(40, 59.5, Math.toRadians(180)))

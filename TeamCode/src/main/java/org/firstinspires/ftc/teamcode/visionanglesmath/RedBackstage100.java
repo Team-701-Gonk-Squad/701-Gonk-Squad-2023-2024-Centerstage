@@ -87,10 +87,10 @@ public class RedBackstage100 extends OpMode {
                 .build();
 
         TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(12, -60, Math.toRadians(90)))
-                .lineToSplineHeading(new Pose2d(11, -32, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(12, -32, Math.toRadians(180)))
                 .build();
         TrajectorySequence leftstriprelease_leftboard = drive.trajectorySequenceBuilder(start_leftstriprelease.end())
-                .lineToSplineHeading(new Pose2d(43, -27, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(43, -24, Math.toRadians(180)))
                 .build();
         TrajectorySequence postleftboard_backup = drive.trajectorySequenceBuilder(leftstriprelease_leftboard.end())
                 .lineToSplineHeading(new Pose2d(30, -27, Math.toRadians(180)))
@@ -103,7 +103,7 @@ public class RedBackstage100 extends OpMode {
         if (position == "center") {
             drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
             drive.followTrajectorySequence(start_centerstriprelease);
-            hardware.intake.setPower(.60);
+            hardware.intake.setPower(.65);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(centerstriprelease_centerboard);
@@ -126,7 +126,7 @@ public class RedBackstage100 extends OpMode {
         } else if (position == "left") {
             drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
             drive.followTrajectorySequence(start_leftstriprelease);
-            hardware.intake.setPower(.60);
+            hardware.intake.setPower(.65);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(leftstriprelease_leftboard);
@@ -137,9 +137,9 @@ public class RedBackstage100 extends OpMode {
             sleep(500);
             hardware.leftSlide.setPower(0);
             hardware.rightSlide.setPower(0);
-            sleep(500);
+            sleep(1500);
             hardware.door.setPosition(0);
-            sleep(2000);
+            sleep(1000);
             drive.followTrajectorySequence(postleftboard_backup);
             hardware.boxRotation.setPosition(1);
             sleep(1000);
@@ -149,7 +149,7 @@ public class RedBackstage100 extends OpMode {
         } else if (position == "right") {
             drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
             drive.followTrajectorySequence(start_rightstriprelease);
-            hardware.intake.setPower(.60);
+            hardware.intake.setPower(.65);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(rightstriprelease_rightboard);
