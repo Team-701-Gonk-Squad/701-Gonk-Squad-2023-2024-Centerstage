@@ -2,13 +2,30 @@ package org.firstinspires.ftc.teamcode.visionanglesmath;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.subsystems.Hardware;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class blinkin extends LinearOpMode {
-    public RevBlinkinLedDriver signal;
+    Hardware hardware;
+
     public void runOpMode() {
-        signal = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
-        signal.setPattern(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_LAVA_PALETTE);
-        sleep(10000);
+
+        hardware = new Hardware(hardwareMap);
+
+        waitForStart();
+
+        sleep(1000);
+        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_LAVA_PALETTE);
+        sleep(1000);
+        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_FOREST_PALETTE);
+        sleep(1000);
+        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_OCEAN_PALETTE);
+        sleep(1000);
+        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_PARTY_PALETTE);
+        sleep(1000);
+        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_RAINBOW_PALETTE);
     }
 }

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -36,9 +37,14 @@ public class Hardware {
 
     public IMU imu;
 
-    // public DistanceSensor distance;
+    RevBlinkinLedDriver blinkinLedDriver;
+    RevBlinkinLedDriver.BlinkinPattern black;
 
     public Hardware(HardwareMap hardwareMap) {
+        blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
+        black = RevBlinkinLedDriver.BlinkinPattern.BLACK;
+        blinkinLedDriver.setPattern(black);
+
         leftFront = hardwareMap.get(DcMotor.class, "2");
         leftRear = hardwareMap.get(DcMotor.class, "0");
         rightRear = hardwareMap.get(DcMotor.class, "1");
@@ -80,6 +86,10 @@ public class Hardware {
         bottomSlot = hardwareMap.get(RevColorSensorV3.class, "I2C3");
         // distance = hardwareMap.get(Rev2mDistanceSensor.class, "I2C1");
         topSlot = hardwareMap.get(RevColorSensorV3.class, "I2C2");
+    }
+
+    public void setLEDs(RevBlinkinLedDriver.BlinkinPattern pattern){
+        blinkinLedDriver.setPattern(pattern);
     }
 
     public Boolean pixelCheck() {

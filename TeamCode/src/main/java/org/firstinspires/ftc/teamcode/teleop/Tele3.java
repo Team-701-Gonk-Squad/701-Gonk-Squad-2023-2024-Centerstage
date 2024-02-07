@@ -4,6 +4,7 @@ import static java.lang.Thread.sleep;
 
 import android.graphics.Color;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -12,12 +13,15 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.subsystems.Hardware;
 import org.firstinspires.ftc.teamcode.visionanglesmath.Ploop;
 
 import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 @TeleOp
 
@@ -27,8 +31,10 @@ public class Tele3 extends LinearOpMode {
     Ploop looper;
     double cyclecount = 0;
     double loop = 0;
+    public double numPixels;
 
-    Timer timer = new Timer();
+    private static ElapsedTime myStopwatch = new ElapsedTime();
+
     Boolean keepPixels = true;
 
     public void runOpMode() {
@@ -45,6 +51,9 @@ public class Tele3 extends LinearOpMode {
         }
 
         waitForStart();
+
+        myStopwatch.reset();
+
 
         while (opModeIsActive()) {
 
@@ -101,7 +110,6 @@ public class Tele3 extends LinearOpMode {
             if (gamepad1.b) {
                 hardware.intake.setPower(-1);
             }
-
             //set powers to pull up hooks
             hardware.verticalActuator.setPower(-(gamepad2.left_stick_y) * 5);
 
@@ -125,11 +133,11 @@ public class Tele3 extends LinearOpMode {
             if (gamepad1.y && gamepad2.y) {
                 hardware.plane.setPower(-1);
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(100);
                 } catch (Exception e) {
                     telemetry.addData("error", e);
                 }
-                hardware.plane.setPower(0);
+                hardware.plane.setPower(1);
             }
 
             if (gamepad2.left_bumper) {
@@ -140,6 +148,39 @@ public class Tele3 extends LinearOpMode {
             } else {
                 hardware.verticalActuator.setPower(0);
             }
+
+            numPixels = 0;
+
+            telemetry.addData("TopSlot: ", hardware.topSlot.getDistance(DistanceUnit.CM));
+            telemetry.addData("BottomSlot: ", hardware.bottomSlot.getDistance(DistanceUnit.CM));
+
+//            if (hardware.topSlot.getDistance(DistanceUnit.CM) <= 3.5) {
+//                numPixels += 1;
+//            }
+//
+//            if (hardware.bottomSlot.getDistance(DistanceUnit.CM) <= 3.5) {
+//                numPixels += 1;
+//            }
+
+            if (myStopwatch.time(TimeUnit.SECONDS) >= 105) {
+                if (myStopwatch.time(TimeUnit.SECONDS) <= 110) {
+                    hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLUE_GREEN);
+                } else if (myStopwatch.time(TimeUnit.SECONDS) <= 115) {
+                    if ((myStopwatch.time(TimeUnit.SECONDS) % 2) == 0) {
+                        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLUE_GREEN);
+                    } else {
+                        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLACK);
+                    }
+                } else {
+                    hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.STROBE_GOLD);
+                }
+            } else if (hardware.bottomSlot.getDistance(DistanceUnit.CM) <= 3.5) {
+                hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RED);
+            } else {
+                hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLACK);
+            }
+
+            telemetry.addData("Stopwatch timer: ", myStopwatch.time(TimeUnit.SECONDS));
 
             telemetry.update();
         }
