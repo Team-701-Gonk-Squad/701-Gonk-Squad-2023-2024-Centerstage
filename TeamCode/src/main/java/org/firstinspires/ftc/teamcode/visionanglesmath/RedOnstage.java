@@ -5,6 +5,7 @@ import static android.os.SystemClock.sleep;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -38,6 +39,7 @@ public class RedOnstage extends OpMode {
 
     @Override
     public void init() {
+
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id",
                 hardwareMap.appContext.getPackageName());
@@ -62,7 +64,7 @@ public class RedOnstage extends OpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         TrajectorySequence start_centerstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
                 .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                .lineToSplineHeading(new Pose2d(-33, -33.5, Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-31.5, -33.5, Math.toRadians(90)))
                 .build();
         TrajectorySequence centerstriprelease_pos2 = drive.trajectorySequenceBuilder(start_centerstriprelease.end())
 //                 TODO: Add beginning of path to get around trusses
@@ -72,7 +74,8 @@ public class RedOnstage extends OpMode {
                 .splineTo(new Vector2d(-45, -7), Math.toRadians(0))
                 .setVelConstraint(new MecanumVelocityConstraint(27, 19.2))
                 .resetVelConstraint()
-                .lineToSplineHeading(new Pose2d(54, -6.4, Math.toRadians(179.9)))
+                .lineToSplineHeading(new Pose2d(54, -6.4, Math.toRadians(178)))
+                .lineToSplineHeading(new Pose2d(54, -7.3, Math.toRadians(180)))
                 .build();
         TrajectorySequence pos2_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, -14.5, Math.toRadians(180)))
                 .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
@@ -107,7 +110,7 @@ public class RedOnstage extends OpMode {
         TrajectorySequence start_rightstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
                 .setVelConstraint(new MecanumVelocityConstraint(35, 19.5))
                 .setTurnConstraint(25, 5)
-                .lineToSplineHeading(new Pose2d(-36, -32.5, Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-36, -36, Math.toRadians(90)))
                 .turn(Math.toRadians(-90))
                 .build();
         TrajectorySequence rightstriprelease_pos2 = drive.trajectorySequenceBuilder(start_rightstriprelease.end())
@@ -115,7 +118,7 @@ public class RedOnstage extends OpMode {
                 .lineToSplineHeading(new Pose2d(-52, -36, Math.toRadians(90)))
                 .splineToConstantHeading(new Vector2d(-36, -9), Math.toRadians(0))
                 .turn(Math.toRadians(-90))
-                .lineToSplineHeading(new Pose2d(54, -7, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(54, -6.4, Math.toRadians(178)))
                 .lineToConstantHeading(new Vector2d(65, -20))
                 .build();
         TrajectorySequence pos2right_boardlineup = drive.trajectorySequenceBuilder(new Pose2d(63, -14.5, Math.toRadians(180)))
@@ -138,7 +141,7 @@ public class RedOnstage extends OpMode {
         TrajectorySequence start_leftstriprelease = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
                 .setVelConstraint(new MecanumVelocityConstraint(35, 19.5))
                 .setTurnConstraint(25, 5)
-                .lineToSplineHeading(new Pose2d(-35, -32.5, Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-35, -34, Math.toRadians(90)))
                 .turn(Math.toRadians(90))
                 .build();
         TrajectorySequence leftstriprelease_pos2 = drive.trajectorySequenceBuilder(start_leftstriprelease.end())
@@ -168,7 +171,7 @@ public class RedOnstage extends OpMode {
         if (position == "center") {
             drive.setPoseEstimate(new Pose2d(-36, -60, Math.toRadians(90))); // TODO: Set correct start
             drive.followTrajectorySequence(start_centerstriprelease); // TODO: Write this trajectory
-            hardware.intake.setPower(0.75);
+            hardware.intake.setPower(0.85);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(centerstriprelease_pos2); // TODO: Write this trajectory
@@ -218,6 +221,7 @@ public class RedOnstage extends OpMode {
             hardware.rightSlide.setPower(0);
             sleep(1200);
             hardware.door.setPosition(0);
+            hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_RAINBOW_PALETTE);
             sleep(1000);
             drive.followTrajectorySequence(postcenterboard_backup);
             hardware.boxRotation.setPosition(1);
@@ -228,7 +232,7 @@ public class RedOnstage extends OpMode {
         } else if (position == "left") {
             drive.setPoseEstimate(new Pose2d(-36, -60, Math.toRadians(90))); // TODO: Set correct start
             drive.followTrajectorySequence(start_leftstriprelease); // TODO: Write this trajectory
-            hardware.intake.setPower(0.85);
+            hardware.intake.setPower(0.6);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(leftstriprelease_pos2); // TODO: Write this trajectory
@@ -273,6 +277,7 @@ public class RedOnstage extends OpMode {
             hardware.rightSlide.setPower(0);
             sleep(1200);
             hardware.door.setPosition(0);
+            hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_RAINBOW_PALETTE);
             sleep(1000);
             drive.followTrajectorySequence(postleftboard_backup);
             hardware.boxRotation.setPosition(1);
@@ -328,6 +333,7 @@ public class RedOnstage extends OpMode {
             hardware.rightSlide.setPower(0);
             sleep(1200);
             hardware.door.setPosition(0);
+            hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_RAINBOW_PALETTE);
             sleep(1000);
             drive.followTrajectorySequence(postrightboard_backup);
             hardware.boxRotation.setPosition(1);

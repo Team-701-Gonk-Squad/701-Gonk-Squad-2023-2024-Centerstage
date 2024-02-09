@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.visionanglesmath;
 import static android.os.SystemClock.sleep;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -90,7 +91,7 @@ public class RedBackstage100 extends OpMode {
                 .lineToSplineHeading(new Pose2d(12, -32, Math.toRadians(180)))
                 .build();
         TrajectorySequence leftstriprelease_leftboard = drive.trajectorySequenceBuilder(start_leftstriprelease.end())
-                .lineToSplineHeading(new Pose2d(43, -24, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(43, -25.5, Math.toRadians(180)))
                 .build();
         TrajectorySequence postleftboard_backup = drive.trajectorySequenceBuilder(leftstriprelease_leftboard.end())
                 .lineToSplineHeading(new Pose2d(30, -27, Math.toRadians(180)))
@@ -103,7 +104,7 @@ public class RedBackstage100 extends OpMode {
         if (position == "center") {
             drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
             drive.followTrajectorySequence(start_centerstriprelease);
-            hardware.intake.setPower(.65);
+            hardware.intake.setPower(0.85);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(centerstriprelease_centerboard);
@@ -123,10 +124,12 @@ public class RedBackstage100 extends OpMode {
             hardware.leftSlide.setPower(-0.25);
             hardware.rightSlide.setPower(-0.25);
             drive.followTrajectorySequence(postcenterboard_park);
+            hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_RAINBOW_PALETTE);
+            sleep(3000);
         } else if (position == "left") {
             drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
             drive.followTrajectorySequence(start_leftstriprelease);
-            hardware.intake.setPower(.65);
+            hardware.intake.setPower(0.85);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(leftstriprelease_leftboard);
@@ -146,10 +149,12 @@ public class RedBackstage100 extends OpMode {
             hardware.leftSlide.setPower(-0.25);
             hardware.rightSlide.setPower(-0.25);
             drive.followTrajectorySequence(postleftboard_park);
+            hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_RAINBOW_PALETTE);
+            sleep(3000);
         } else if (position == "right") {
             drive.setPoseEstimate(new Pose2d(12, -60, Math.toRadians(90)));
             drive.followTrajectorySequence(start_rightstriprelease);
-            hardware.intake.setPower(.65);
+            hardware.intake.setPower(0.85);
             sleep(3000);
             hardware.intake.setPower(0);
             drive.followTrajectorySequence(rightstriprelease_rightboard);
@@ -169,6 +174,8 @@ public class RedBackstage100 extends OpMode {
             hardware.leftSlide.setPower(-0.25);
             hardware.rightSlide.setPower(-0.25);
             drive.followTrajectorySequence(postrightboard_park);
+            hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_RAINBOW_PALETTE);
+            sleep(3000);
         }
         requestOpModeStop();
     }

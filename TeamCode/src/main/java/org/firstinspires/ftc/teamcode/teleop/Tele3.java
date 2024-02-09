@@ -37,6 +37,8 @@ public class Tele3 extends LinearOpMode {
 
     Boolean keepPixels = true;
 
+    private double time;
+
     public void runOpMode() {
 
         /* init */ {
@@ -49,6 +51,8 @@ public class Tele3 extends LinearOpMode {
             hardware.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             hardware.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
+
+        time = 0;
 
         waitForStart();
 
@@ -116,11 +120,11 @@ public class Tele3 extends LinearOpMode {
             telemetry.addData("speed", speed);
 
             if (gamepad2.right_trigger != 0) {
-                hardware.leftSlide.setPower(0.75);
-                hardware.rightSlide.setPower(0.75);
+                hardware.leftSlide.setPower(0.5);
+                hardware.rightSlide.setPower(0.5);
             } else if (gamepad2.left_trigger != 0) {
-                hardware.leftSlide.setPower(-0.75);
-                hardware.rightSlide.setPower(-0.75);
+                hardware.leftSlide.setPower(-0.35);
+                hardware.rightSlide.setPower(-0.35);
             } else {
                 hardware.leftSlide.setPower(0);
                 hardware.rightSlide.setPower(0);
@@ -162,22 +166,20 @@ public class Tele3 extends LinearOpMode {
 //                numPixels += 1;
 //            }
 
-            if (myStopwatch.time(TimeUnit.SECONDS) >= 105) {
-                if (myStopwatch.time(TimeUnit.SECONDS) <= 110) {
-                    hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLUE_GREEN);
-                } else if (myStopwatch.time(TimeUnit.SECONDS) <= 115) {
-                    if ((myStopwatch.time(TimeUnit.SECONDS) % 2) == 0) {
-                        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLUE_GREEN);
-                    } else {
-                        hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLACK);
-                    }
-                } else {
-                    hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.STROBE_GOLD);
-                }
-            } else if (hardware.bottomSlot.getDistance(DistanceUnit.CM) <= 3.5) {
+            time = myStopwatch.time(TimeUnit.SECONDS);
+
+            hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLACK);
+            if ((time >= 105) && (time <= 110)) {
+                hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RED_ORANGE);
+            }
+            if ((time >= 110) && (time <= 115)) {
                 hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RED);
-            } else {
-                hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.BLACK);
+            }
+            if ((time >= 115) && (time <= 120)) {
+                hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.STROBE_RED);
+            }
+            if ((hardware.bottomSlot.getDistance(DistanceUnit.CM) <= 3.5) && time <= 120) {
+                hardware.setLEDs(RevBlinkinLedDriver.BlinkinPattern.RED);
             }
 
             telemetry.addData("Stopwatch timer: ", myStopwatch.time(TimeUnit.SECONDS));
