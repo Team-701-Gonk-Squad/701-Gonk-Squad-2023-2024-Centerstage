@@ -25,6 +25,61 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))  // start coordinates: (-35, +-60)   (12, +-60)  |  angles:90 or 270
+
+                                //TODO: NEW TRAJECTORY SEQUENCE    --    Red OnstageRight   --   StartPose (-36, -60, 90 deg)
+//                                .splineToSplineHeading(new Pose2d(-34, -32), Math.toRadians(90))
+//                                .waitSeconds(3)
+//                                .lineToConstantHeading(new Vector2d(-37, -10))
+//                                .lineToSplineHeading(new Pose2d(30, -10, Math.toRadians(180)))
+//                                .splineToConstantHeading(new Vector2d(30, -40), Math.toRadians(180))
+//                                .lineToConstantHeading(new Vector2d(40, -40))
+//                                .addDisplacementMarker(20,() -> {
+//                                    //outtake purple pixel
+//                                })
+//                                .addDisplacementMarker(100, () -> {
+//                                    //get arm ready
+//                                })
+//                                .addDisplacementMarker(165, () -> {
+//                                    //outtake yellow pixel
+//                                })
+
+                                //TODO: NEW TRAJECTORY SEQUENCE    --    Red OnstageCenter   --   StartPose (-36, -60, 90 deg)
+//                                .lineToConstantHeading(new Vector2d(-34, -36))
+//                                .waitSeconds(3)
+//                                .lineToSplineHeading(new Pose2d(-55,-40, Math.toRadians(90)))
+//                                .splineToLinearHeading(new Pose2d(-37, -10), Math.toRadians(0))
+//                                .lineToSplineHeading(new Pose2d(30, -10, Math.toRadians(180)))
+//                                .splineToConstantHeading(new Vector2d(30, -40), Math.toRadians(180))
+//                                .lineToConstantHeading(new Vector2d(40, -40))
+//                                .addDisplacementMarker(200, () -> {
+//                                    //outtake yellow
+//                                })
+//                                .addDisplacementMarker(150, () -> {
+//                                    //move le arm
+//                                })
+//                                .addDisplacementMarker(20,() -> {
+//                                    //outtake purple
+//                                })
+
+                                //TODO: NEW TRAJECTORY SEQUENCE    --    Red OnstageLeft   --   StartPose (-36, -60, 90 deg)
+//                                .lineToLinearHeading(new Pose2d(-34, -32, Math.toRadians(180)))
+//                                .waitSeconds(3)
+//                                .lineToLinearHeading(new Pose2d(-37, -10, Math.toRadians(0)))
+//                                .lineToSplineHeading(new Pose2d(30, -10, Math.toRadians(180)))
+//                                .splineToConstantHeading(new Vector2d(30, -40), Math.toRadians(180))
+//                                .lineToConstantHeading(new Vector2d(40, -40))
+//                                .addDisplacementMarker(20,() -> {
+//                                    //outtake purple pixel
+//                                })
+//                                .addDisplacementMarker(100, () -> {
+//                                    //get arm ready
+//                                })
+//                                .addDisplacementMarker(165, () -> {
+//                                    //outtake yellow pixel
+//                                })
+
+
+
                                 //TODO: Base method with just splineTo
 //                                .splineTo(new Vector2d(-35, -46), Math.toRadians(90))
 //                                .splineTo(new Vector2d(0, -35), Math.toRadians(0))
@@ -64,15 +119,15 @@ public class MeepMeepTesting {
 //                                .build()
 
 
-                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                                .lineToSplineHeading(new Pose2d(-31.5, -33.5, Math.toRadians(90)))
-                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
-                                .lineToSplineHeading(new Pose2d(-40, -40, Math.toRadians(90)))
-                                .splineToConstantHeading(new Vector2d(-55, -35), Math.toRadians(90))
-                                .splineTo(new Vector2d(-45, -7), Math.toRadians(0))
-                                .setVelConstraint(new MecanumVelocityConstraint(27, 19.2))
-                                .resetVelConstraint()
-                                .lineToSplineHeading(new Pose2d(54, -6.4, Math.toRadians(178)))
+//                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
+//                                .lineToSplineHeading(new Pose2d(-31.5, -33.5, Math.toRadians(90)))
+//                                .setVelConstraint(new MecanumVelocityConstraint(30, 19.5))
+//                                .lineToSplineHeading(new Pose2d(-40, -40, Math.toRadians(90)))
+//                                .splineToConstantHeading(new Vector2d(-55, -35), Math.toRadians(90))
+//                                .splineTo(new Vector2d(-45, -7), Math.toRadians(0))
+//                                .setVelConstraint(new MecanumVelocityConstraint(27, 19.2))
+//                                .resetVelConstraint()
+//                                .lineToSplineHeading(new Pose2d(54, -6.4, Math.toRadians(178)))
 
 //                                .setVelConstraint(new MecanumVelocityConstraint(25, 19.5))
 //                                .lineToConstantHeading(new Vector2d(50, 12))
